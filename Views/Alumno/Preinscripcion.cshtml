@@ -29,9 +29,9 @@
                     <input asp-for="@Model.FechaNacimiento" type="date" class="form-control" required>
                 </div>
 
-                @{Model.ListaTelefonos.Add(" ");}
-                @{Model.ListaTelefonos.Add(" ");}
-                @{Model.ListaTelefonos.Add(new string());}
+                @{Model.ListaTelefonos.Add(null);}
+                @{Model.ListaTelefonos.Add(null);}
+                @{Model.ListaTelefonos.Add(null);}
                 <div id="numero-telefono">
                     <div class="mb-3" id="cod-area">
                         <label asp-for="@Model.ListaTelefonos[0]">Codigo Area</label>
@@ -133,11 +133,7 @@
 
                 <div class="mb-3">
                     <label asp-for="@Model.Establecimiento">Establecimiento Academico</label>
-                    <select asp-for="@Model.Establecimiento" class="form-control" required>
-                        <option value="San Miguel de Tucuman">San Miguel de Tucuman</option>
-                        <option value="Villa Quinteros">Villa Quinteros</option>
-                        <option value="Juan Bautista Alberdi">Juan Bautista Alberdi</option>
-                        <option value="Virtual">Virtual</option>
+                    <select asp-for="@Model.Establecimiento" asp-items="@Html.GetEnumSelectList<EstablecimientoAcademico>()" class="form-control" required>
                     </select>
                 </div>
 

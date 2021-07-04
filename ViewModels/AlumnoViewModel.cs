@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Proyecto.Entidades;
 
 namespace Proyecto.ViewModels
@@ -72,5 +73,6 @@ namespace Proyecto.ViewModels
             //this.ListaFechasInscripcion = new List<DateTime>();
             //this.ListaFechasPago = new List<DateTime>();
         }
+
     }
 }

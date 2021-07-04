@@ -258,3 +258,10 @@ btnReturn.addEventListener('click', () => {
         }
     }
 })
+
+
+const establecimiento = document.getElementById('Establecimiento')
+
+establecimiento.required = true
+
+establecimiento.classList.add("form-control")
