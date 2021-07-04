@@ -1,0 +1,455 @@
+﻿@model Proyecto.ViewModels.AlumnoViewModel
+
+<section>
+    <article>
+        <h1 id="titulo">Formulario de Pre-Inscripcion</h1>
+        <form asp-action="CrearAlumno" method="post">
+            <fieldset>
+                <legend>Datos Personales</legend>
+                <div class="mb-3">
+                    <label asp-for="@Model.Nombre">Nombre</label>
+                    <input asp-for="@Model.Nombre" type="text" class="form-control" maxlength="80" placeholder="Nombres" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese todos sus nombres</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Apellido">Apellido</label>
+                    <input asp-for="@Model.Apellido" type="text" class="form-control" maxlength="80" placeholder="Apellidos" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese todos sus apellidos</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.DNI">DNI</label>
+                    <input asp-for="@Model.DNI" type="number" class="form-control" max="99999999" placeholder="32455897" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese su dni sin puntos</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.FechaNacimiento">Fecha de Nacimiento</label>
+                    <input asp-for="@Model.FechaNacimiento" type="date" class="form-control" required>
+                </div>
+
+                <div id="numero-telefono">
+                    <div class="mb-3" id="cod-area">
+                        <label asp-for="@Model.ListaTelefonos[0]">Codigo Area</label>
+                        <input asp-for="@Model.ListaTelefonos[0] type=" tel" class="form-control" maxlength="6" area" class="mb-3" placeholder="381" required>
+                    </div>
+                    <div class="mb-3" id="num-tel">
+                        <label asp-for="@Model.ListaTelefonos[1]">Numero</label>
+                        <input asp-for="@Model.ListaTelefonos[1] type=" tel" class="form-control" maxlength="10" placeholder="5486795" required>
+                    </div>
+                    <small id="emailHelp" class="form-text text-muted">Ej: 381-5794360</small>
+                </div>
+
+                <div class="mb-3" id="div-email">
+                    <!-- Verificar que sea solo gmail.com -->
+                    <label asp-for="@Model.Mail">Email</label>
+                    <input asp-for="@Model.Mail" type="email" class="form-control" placeholder="juandiaz@gmail.com" aria-describedby="emailHelp" maxlength="40" minlength="16" required>
+                    <small id="emailHelp" class="form-text text-muted">Necesitas tener un email de Google. Ej: example@gmail.com</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Provincia">Provincia</label>
+                    <select asp-for="@Model.Provincia" class="form-control" required>
+                        <option value="Buenos Aires">Buenos Aires</option>
+                        <option value="Capital Federal">Capital Federal</option>
+                        <option value="Catamarca">Catamarca</option>
+                        <option value="Chaco">Chaco</option>
+                        <option value="Chubut">Chubut</option>
+                        <option value="Cordoba">Córdoba</option>
+                        <option value="Corrientes">Corrientes</option>
+                        <option value="Entre Rios">Entre Ríos</option>
+                        <option value="Formosa">Formosa</option>
+                        <option value="Jujuy">Jujuy</option>
+                        <option value="La Pampa">La Pampa</option>
+                        <option value="La Rioja">La Rioja</option>
+                        <option value="Mendoza">Mendoza</option>
+                        <option value="Misiones">Misiones</option>
+                        <option value="Neuquen">Neuquén</option>
+                        <option value="Rio Negro">Río Negro</option>
+                        <option value="Salta">Salta</option>
+                        <option value="San Juan">San Juan</option>
+                        <option value="San Luis">San Luis</option>
+                        <option value="Santa Cruz">Santa Cruz</option>
+                        <option value="Santa Fe">Santa Fe</option>
+                        <option value="Santiago del Estero">Santiago del Estero</option>
+                        <option value="Tierra del Fuego">Tierra del Fuego</option>
+                        <option value="Tucuman" selected="selected">Tucumán</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Departamento">Departamento</label>
+                    <select asp-for="@Model.Departamento" class="form-control" required>
+                        <option value="Burruyacu">Burruyacu</option>
+                        <option value="Chicligasta">Chicligasta</option>
+                        <option value="Cruz Alta">Cruz Alta</option>
+                        <option value="Famailla">Famailla</option>
+                        <option value="Graneros">Graneros</option>
+                        <option value="Juan Bautista Alberdi">Juan Bautista Alberdi</option>
+                        <option value="La Cocha">La Cocha</option>
+                        <option value="Leales">Leales</option>
+                        <option value="Lules">Lules</option>
+                        <option value="Monteros">Monteros</option>
+                        <option value="Rio Chico">Rio Chico</option>
+                        <option value="San Miguel de Tucuman" selected="selected">San Miguel de Tucuman</option>
+                        <option value="Simoca">Simoca</option>
+                        <option value="Trancas">Trancas</option>
+                        <option value="Tafi del Valle">Tafi del Valle</option>
+                        <option value="Tafi Viejo">Tafi Viejo</option>
+                        <option value="Yerba Buena">Yerba Buena</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Localidad">Localidad, Municipio o Comuna</label>
+                    <input asp-for="@Model.Localidad" type="text" class="form-control" minlength="4" maxlength="60" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese el nombre completo de su localidad, municipio o comuna</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Domicilio">Domicilio</label>
+                    <input asp-for="@Model.Domicilio" type="text" class="form-control" minlength="4" maxlength="60" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese su domicilio completo</small>
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Turno">Turno</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" value="maniana" required>
+                        <label asp-for="@Model.Turno">Mañana</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" value="tarde">
+                        <label asp-for="@Model.Turno">Tarde</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Establecimiento">Establecimiento Academico</label>
+                    <select asp-for="@Model.Establecimiento" class="form-control" required>
+                        <option value="San Miguel de Tucuman">San Miguel de Tucuman</option>
+                        <option value="Villa Quinteros">Villa Quinteros</option>
+                        <option value="Juan Bautista Alberdi">Juan Bautista Alberdi</option>
+                        <option value="Virtual">Virtual</option>
+                    </select>
+                </div>
+
+                <!--------------------------------------- GRUPOS ---------------------------------------->
+
+                <div class="mb-3" id="div-categoria">
+                    <label asp-for="@Model.Grupo">Fuerza</label>
+                    <select asp-for="@Model.Grupo" class="form-control" required>
+                        <optgroup label="Fuerzas Armadas">
+                            <option value="Ejercito">Ejercito</option>
+                            <option value="Armada">Armada</option>
+                            <option value="Fuerza Aerea">Fuerza Aerea</option>
+                        </optgroup>
+                        <optgroup label="Fuerzas de Seguridad">
+                            <option value="Gendarmeria">Gendarmería</option>
+                            <option value="Prefectura Naval">Prefectura Naval</option>
+                            <option value="Policia Federal">Policía Federal</option>
+                            <option value="Policia Federal de Seguridad Aeropuertaria">Policía Federal de Seguridad Aeropuertaria</option>
+                            <option value="Policia de Tucuman">Policía de Tucumán</option>
+                        </optgroup>
+                        <optgroup label="Capacitacion">
+                            <option value="Preparatoria Vocacional 100">Preparatoria Vocacional 100</option>
+                            <option value="Curso de Adaptacion Militar">Curso de Adaptación Militar</option>
+                            <option value="Asistente de Seguridad y Defensa">Asistente de Seguridad y Defensa</option>
+                            <option value="Entrenamiento de Competencias Emocionales">Entrenamiento de Competencias Emocionales</option>
+                            <option value="Adiestramiento Fisico Integral">Adiestramiento Físico Integral</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!--------- ---------- FUERZAS ARMADAS ----------------->
+                <!-- EJERCITO -->
+                <div class="mb-3" id="div-ejercito">
+                    <label asp-for="@Model.Curso">Escuela</label>
+                    <select asp-for="@Model.Curso" class="form-control" required>
+                        <option value="Colegio Militar de la Nacion">Colegio Militar de la Nacion</option>
+                        <option value="Escuela de Suboficiales del Ejercito Sargento Cabral">Escuela de Suboficiales del Ejercito Sargento Cabral</option>
+                    </select>
+                </div>
+
+                <!-- ARMADA -->
+                <div class="mb-3" id="div-armada">
+                    <label asp-for="@Model.Curso">Escuela</label>
+                    <select asp-for="@Model.Curso" class="form-control" required>
+                        <option value="Escuela Naval Militar">Escuela Naval Militar</option>
+                        <option value="Escuela de Suboficiales de la Armada">Escuela de Suboficiales de la Armada</option>
+                    </select>
+                </div>
+
+                <!-- FUERZA AEREA -->
+                <div class="mb-3" id="div-fuerza-aerea">
+                    <label asp-for="@Model.Curso">Escuela</label>
+                    <select asp-for="@Model.Curso" class="form-control" required>
+                        <option value="Escuela de Aviacion Militar">Escuela de Aviacion Militar</option>
+                        <option value="Escuela de Suboficiales de la Fuerza Aerea">Escuela de Suboficiales de la Fuerza Aerea</option>
+                    </select>
+                </div>
+
+            </fieldset>
+
+            <!----------------------------------------------------------------- ESCUELA SECUNDARIA --------------------------------------------------------------------------------------------------->
+
+            <fieldset>
+                <legend>Escuela Secundaria</legend>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Instituto.Nombre">Nombre Escuela</label>
+                    <input asp-for="@Model.Instituto.Nombre" type="text" class="form-control" maxlength="100" }placeholder="" required>
+                </div>
+
+                <!-- VERIFICAR que si uno de los contactos esta relleno, entonces el otro no sea requerido -->
+                <!-- <h6>Contacto</h6> -->
+                @*<div class="mb-3" id="cod-area">
+            <label asp-for="@Model.Instituto.Telefono">Codigo Area</label>
+            <input asp-for="@Model.Instituto.Telefono" type="tel" class="form-control" maxlength="6" class="mb-3" placeholder="381" required>
+        </div>*@
+                <div class="mb-3" id="num-tel">
+                    <label asp-for="@Model.Instituto.Telefono">Numero</label>
+                    <input asp-for="@Model.Instituto.Telefono" type="tel" class="form-control" maxlength="15" placeholder="5486795" required>
+                </div>
+
+                <div class="mb-3" id="div-email">
+                    <!-- Puede contener cualquier dominio -->
+                    <label asp-for="@Model.Instituto.Mail">Email</label>
+                    <input asp-for="@Model.Instituto.Mail" type="email" class="form-control" placeholder="escuelabelgrano@hotmail.com" aria-describedby="emailHelp" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Instituto.Provincia">Provincia</label>
+                    <select asp-for="@Model.Instituto.Provincia" class="form-control" required>
+                        <option value="Buenos Aires">Buenos Aires</option>
+                        <option value="Capital Federal">Capital Federal</option>
+                        <option value="Catamarca">Catamarca</option>
+                        <option value="Chaco">Chaco</option>
+                        <option value="Chubut">Chubut</option>
+                        <option value="Cordoba">Córdoba</option>
+                        <option value="Corrientes">Corrientes</option>
+                        <option value="Entre Rios">Entre Ríos</option>
+                        <option value="Formosa">Formosa</option>
+                        <option value="Jujuy">Jujuy</option>
+                        <option value="La Pampa">La Pampa</option>
+                        <option value="La Rioja">La Rioja</option>
+                        <option value="Mendoza">Mendoza</option>
+                        <option value="Misiones">Misiones</option>
+                        <option value="Neuquen">Neuquén</option>
+                        <option value="Rio Negro">Río Negro</option>
+                        <option value="Salta">Salta</option>
+                        <option value="San Juan">San Juan</option>
+                        <option value="San Luis">San Luis</option>
+                        <option value="Santa Cruz">Santa Cruz</option>
+                        <option value="Santa Fe">Santa Fe</option>
+                        <option value="Santiago del Estero">Santiago del Estero</option>
+                        <option value="Tierra del Fuego">Tierra del Fuego</option>
+                        <option value="Tucuman" selected="selected">Tucumán</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Instituto.Departamento">Departamento</label>
+                    <select asp-for="@Model.Instituto.Departamento" class="form-control" required>
+                        <option value="Burruyacu">Burruyacu</option>
+                        <option value="Chicligasta">Chicligasta</option>
+                        <option value="Cruz Alta">Cruz Alta</option>
+                        <option value="Famailla">Famailla</option>
+                        <option value="Graneros">Graneros</option>
+                        <option value="Juan Bautista Alberdi">Juan Bautista Alberdi</option>
+                        <option value="La Cocha">La Cocha</option>
+                        <option value="Leales">Leales</option>
+                        <option value="Lules">Lules</option>
+                        <option value="Monteros">Monteros</option>
+                        <option value="Rio Chico">Rio Chico</option>
+                        <option value="San Miguel de Tucuman" selected="selected">San Miguel de Tucuman</option>
+                        <option value="Simoca">Simoca</option>
+                        <option value="Trancas">Trancas</option>
+                        <option value="Tafi del Valle">Tafi del Valle</option>
+                        <option value="Tafi Viejo">Tafi Viejo</option>
+                        <option value="Yerba Buena">Yerba Buena</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Instituto.Localidad">Localidad, Municipio o Comuna</label>
+                    <input asp-for="@Model.Instituto.Localidad" type="text" class="form-control" minlength="4" maxlength="60" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese el nombre completo de su localidad, municipio o comuna</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Instituto.Domicilio"> Domicilio</label>
+                    <input asp-for="@Model.Instituto.Domicilio" type="text" class="form-control" maxlength="50" required>
+                </div>
+            </fieldset>
+
+            <!---------------------------------------------------------------------------- FAMILIARES --------------------------------------------------------------------------------------------------->
+
+        @{Model.ListaFamiliares.Add(new Familiar());}
+
+        <fieldset>
+            <legend>Familiares</legend>
+
+            <div class="mb-3" id="checkbox-familiares">
+                <label for="familiar" id="">Tiene padre, madre, tutor o conoce sus datos?. Seleccione el/los correspondientes</label>
+                <div class="form-check" id="checkbox-padre">
+                    <input type="checkbox" class="form-check-input" id="padre" required>
+                    <label for="padre">Padre</label>
+                </div>
+                <div class="form-check" id="checkbox-madre">
+                    <input type="checkbox" class="form-check-input" id="madre">
+                    <label for="madre">Madre</label>
+                </div>
+                <div class="form-check" id="checkbox-tutor">
+                    <input type="checkbox" class="form-check-input" id="tutor">
+                    <label for="tutor">Tutor</label>
+                </div>
+            </div>
+
+            <div id="div-padre">
+                <hr>
+                <h5>Padre</h5>
+                <div class="mb-3">
+                    <label asp-for="@Model.ListaFamiliares[0].Nombre">Nombre</label>
+                    <input asp-for="@Model.ListaFamiliares[0].Nombre" type="text" class="form-control" maxlength="60" placeholder="Juan Alberto" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese todos sus nombres</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.ListaFamiliares[0].Apellido">Apellidos</label>
+                    <input asp-for="@Model.ListaFamiliares[0].Apellido" type="text" class="form-control" maxlength="80" placeholder="Robles Ahuad" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese todos sus apellidos</small>
+                </div>
+
+                <div class="mb-3" id="cod-area">
+                    <label asp-for="@Model.ListaFamiliares[0].Telefono">Codigo Area</label>
+                    <input asp-for="@Model.ListaFamiliares[0].Telefono" type="tel" class="form-control" maxlength="6" class="mb-3" placeholder="381" required>
+                </div>
+                <div class="mb-3" id="num-tel">
+                    <label asp-for="@Model.ListaFamiliares[0].Telefono">Numero</label>
+                    <input asp-for="@Model.ListaFamiliares[0].Telefono" type="tel" class="form-control" maxlength="15" placeholder="5486795" required>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.ListaFamiliares[0].Ocupacion">Ocupacion</label>
+                    <input asp-for="@Model.ListaFamiliares[0].Ocupacion" type="text" class="form-control" maxlength="60"placeholder="Agricultor, recolector, jubilado, empleado, etc" required>
+                    <small id="emailHelp" class="form-text text-muted">Ingrese cual es el trabajo de su padre</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.ListaFamiliares[0].Empresa">Establecimiento (Empresa) (Opcional)</label>
+                    <input asp-for="@Model.ListaFamiliares[0].Empresa" type="text" class="form-control" maxlength="60" placeholder="FGF Trapani S.A.">
+                    <small id="emailHelp" class="form-text text-muted">Ingrese el lugar en donde trabaja</small>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.ListaFamiliares[0].Gremio">Gremio (Opcional)</label>
+                    <input asp-for="@Model.ListaFamiliares[0].Gremio" type="text" class="form-control" maxlength="60" placeholder="Sociedad de Empleados de Obreros del Comercio (SEOC)">
+                    <small id="emailHelp" class="form-text text-muted">Si es que pertenece a un gremio ingreselo. Coloque el nombre completo para evitar ambiguedades.</small>
+                </div>
+            </div>
+
+            @*
+        <div id="div-madre">
+            <hr>
+            <h5>Madre</h5>
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[1].Nombre">Nombre</label>
+                <input type="text" class="form-control" maxlength="60" id="nombre-madre" placeholder="Maria Hernesta" required>
+                <small id="emailHelp" class="form-text text-muted">Ingrese todos sus nombres</small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[1].Apellido">Apellidos</label>
+                <input type="text" class="form-control" maxlength="80" id="apellido-madre" placeholder="Fernandez Aliz" required>
+                <small id="emailHelp" class="form-text text-muted">Ingrese todos sus apellidos</small>
+            </div>
+
+            <div class="mb-3" id="cod-area">
+                <label asp-for="@Model.ListaFamiliares[1].Telefono">Codigo Area</label>
+                <input type="tel" class="form-control" maxlength="6" class="mb-3" id="codigo-area" placeholder="381" required>
+            </div>
+            <div class="mb-3" id="num-tel">
+                <label asp-for="@Model.ListaFamiliares[1].Telefono">Numero</label>
+                <input type="tel" class="form-control" maxlength="15" id="numero-tel" placeholder="5486795" required>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[1].Ocupacion">Ocupacion</label>
+                <input type="text" class="form-control" maxlength="60" id="ocupacion-madre" placeholder="Agricultora, recolectora, jubilada, empleada, etc" required>
+                <small id="emailHelp" class="form-text text-muted">Ingrese cual es el trabajo de su madre</small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[1].Empresa">Establecimiento (Empresa) (Opcional)</label>
+                <input type="text" class="form-control" maxlength="60" id="empresa-madre" placeholder="FGF Trapani S.A.">
+                <small id="emailHelp" class="form-text text-muted">Ingrese el lugar en donde trabaja</small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[1].Gremio">Gremio (Opcional)</label>
+                <input type="text" class="form-control" maxlength="60" id="gremio-madre" placeholder="Sociedad de Empleados de Obreros del Comercio (SEOC)">
+                <small id="emailHelp" class="form-text text-muted">Si es que pertenece a un gremio ingreselo. Coloque el nombre completo para evitar ambiguedades.</small>
+            </div>
+        </div>
+
+        <div id="div-tutor">
+            <hr>
+            <h5>Tutor</h5>
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[2].Nombre">Nombre</label>
+                <input type="text" class="form-control" maxlength="60" id="nombre-tutor" placeholder="Juan Alberto" required>
+                <small id="emailHelp" class="form-text text-muted">Ingrese todos sus nombres</small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[2].Apellido">Apellidos</label>
+                <input type="text" class="form-control" maxlength="80" id="apellido-tutor" placeholder="Robles Ahuad" required>
+                <small id="emailHelp" class="form-text text-muted">Ingrese todos sus apellidos</small>
+            </div>
+
+            <div class="mb-3" id="cod-area">
+                <label asp-for="@Model.ListaFamiliares[2].Telefono">Codigo Area</label>
+                <input type="tel" class="form-control" maxlength="6" class="mb-3" id="codigo-area" placeholder="381" required>
+            </div>
+            <div class="mb-3" id="num-tel">
+                <label asp-for="@Model.ListaFamiliares[2].Telefono">Numero</label>
+                <input type="tel" class="form-control" maxlength="15" id="numero-tel" placeholder="5486795" required>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[2].Ocupacion">Ocupacion</label>
+                <input type="text" class="form-control" maxlength="60" id="ocupacion-tutor" placeholder="Agricultor, recolector, jubilado, empleado, etc" required>
+                <small id="emailHelp" class="form-text text-muted">Ingrese cual es el trabajo de su tutor</small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[2].Empresa">Establecimiento (Empresa) (Opcional)</label>
+                <input type="text" class="form-control" maxlength="60" id="empresa-tutor" placeholder="FGF Trapani S.A.">
+                <small id="emailHelp" class="form-text text-muted">Ingrese el lugar en donde trabaja</small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@Model.ListaFamiliares[2].Gremio">Gremio (Opcional)</label>
+                <input type="text" class="form-control" maxlength="60" id="gremio-tutor" placeholder="Sociedad de Empleados de Obreros del Comercio (SEOC)">
+                <small id="emailHelp" class="form-text text-muted">Si es que pertenece a un gremio ingreselo. Coloque el nombre completo para evitar ambiguedades.</small>
+            </div>
+        </div>
+           *@
+
+
+        </fieldset>
+
+
+            <input id="submit-button" type="submit" class="btn btn-success" value="Registrarme">
+            <input id="return-button" type="button" class="btn btn-primary" value="Volver">
+
+
+        </form>
+    </article>
+</section>

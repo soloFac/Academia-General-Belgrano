@@ -1,0 +1,49 @@
+﻿@model List<Proyecto.Entidades.Alumno>
+
+<header>
+    <h1>Listado Usuarios</h1>
+</header>
+
+<table class="table">
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Mail</th>
+        <th>DNI</th>
+        <th>FechaNacimiento</th>
+        <th>Provincia</th>
+        <th>Departamento</th>
+        <th>Localidad</th>
+        <th>Domicilio</th>
+        <th>Turno</th>
+        <th>Establecimiento</th>
+        <th>Grupo</th>
+        <th>Curso</th>
+        @*<th>FechaInscripcion</th>*@
+        <th>Estado</th>
+        <th>Instituto</th>
+    </tr>
+
+    @foreach (Alumno alumno in Model)
+    {
+        <tr id="tablerow">
+            <td>@alumno.Nombre</td>
+            <td>@alumno.Apellido</td>
+            <td>@alumno.Mail</td>
+            <td>@alumno.DNI</td>
+            <td>@alumno.FechaNacimiento</td>
+            <td>@alumno.Provincia</td>
+            <td>@alumno.Departamento</td>
+            <td>@alumno.Localidad</td>
+            <td>@alumno.Domicilio</td>
+            <td>@alumno.Turno</td>
+            <td>@alumno.Establecimiento</td>
+            @*<td>@alumno.Grupo</td>*@
+            <td></td>
+            <td>@alumno.Curso</td>
+            @*<td>@alumno.FechaInscripcion</td>*@
+            <td>@alumno.Estado</td>
+            <td>@alumno.Instituto</td>
+        </tr>
+    }
+</table>
