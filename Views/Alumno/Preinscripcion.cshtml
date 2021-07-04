@@ -29,6 +29,9 @@
                     <input asp-for="@Model.FechaNacimiento" type="date" class="form-control" required>
                 </div>
 
+                @{Model.ListaTelefonos.Add(" ");}
+                @{Model.ListaTelefonos.Add(" ");}
+                @{Model.ListaTelefonos.Add(new string());}
                 <div id="numero-telefono">
                     <div class="mb-3" id="cod-area">
                         <label asp-for="@Model.ListaTelefonos[0]">Codigo Area</label>
@@ -290,7 +293,7 @@
 
             <!---------------------------------------------------------------------------- FAMILIARES --------------------------------------------------------------------------------------------------->
 
-        @{Model.ListaFamiliares.Add(new Familiar());}
+        @{Model.ListaFamiliares.Add(new FamiliarViewModel());}
 
         <fieldset>
             <legend>Familiares</legend>

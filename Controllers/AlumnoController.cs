@@ -38,6 +38,7 @@ namespace Proyecto.Controllers
 
             return View(ListaAlumnos);
         }
+
         public IActionResult Preinscripcion()
         {
             return View(new AlumnoViewModel());
@@ -52,10 +53,10 @@ namespace Proyecto.Controllers
                 Alumno nAlumno = mapper.Map<Alumno>(nAlumnoVM);
                 RAlumno.AltaAlumno(nAlumno);
 
-                return Content("el modelo es valido");
+                return Content(nAlumnoVM.ListaFamiliares[0].Apellido);
             }
 
-            return Content("El modelo no es valido");
+            return Content(nAlumnoVM.ListaFamiliares[0].Apellido);
         }
 
         //public IActionResult AltaAlumno()
