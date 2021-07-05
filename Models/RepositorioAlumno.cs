@@ -25,11 +25,11 @@ namespace Proyecto.Models
                 var command = connection.CreateCommand();
                 command.CommandText = "SELECT *, " +
                     "p.apellido AS p_apellido, p.nombre AS p_nombre, " +
-                    "esc.nombre AS esc_nombre, esc.departamento AS esc_departamento, esc.localidad AS esc_localidad, esc.mail AS esc_mail " +
-                    "esc.telefono ASC esc_telefono, esc.domicilio AS esc_domicilio, esc.provincia AS esc_provincia " +
+                    "esc.nombre AS esc_nombre, esc.departamento AS esc_departamento, esc.localidad AS esc_localidad, esc.mail AS esc_mail, " +
+                    "esc.telefono AS esc_telefono, esc.domicilio AS esc_domicilio, esc.provincia AS esc_provincia, " +
                     "curs.nombre AS curs_nombre, " +
                     "est_acad.nombre AS est_acad_nombre " +
-                                                            "FROM alumnos " +
+                                                            " FROM alumnos " +
                                             "INNER JOIN personas AS p USING(id_persona) " +
                                             "INNER JOIN escuelas AS esc USING(id_escuela) " +
                                             "INNER JOIN detalles_cursos AS det_curs ON id_alumno = id_persona " +
@@ -55,9 +55,6 @@ namespace Proyecto.Models
                     nAlumno.Turno = (Turnos) Convert.ToInt32(reader["turno"]);
                     nAlumno.Estado = (Boolean) reader["estado"];
 
-                    nAlumno.EstablecimientoAlumno.ID = Convert.ToInt32(reader["id_establecimiento_academico"]);
-                    nAlumno.EstablecimientoAlumno.Nombre = reader["est_acad_nombre"].ToString();
-
                     //ESCUELA
                     nAlumno.Instituto.ID = Convert.ToInt32(reader["id_escuela"]);
                     nAlumno.Instituto.Nombre = reader["esc_nombre"].ToString();
@@ -68,19 +65,18 @@ namespace Proyecto.Models
                     nAlumno.Instituto.Departamento = reader["esc_departamento"].ToString();
                     nAlumno.Instituto.Provincia = reader["esc_provincia"].ToString();
 
+                    nAlumno.EstablecimientoAlumno.ID = Convert.ToInt32(reader["id_establecimiento_academico"]);
 
-                    List<Familiar> listaFamiliares = nRFamiliar.BusquedaFamiliarIDAlumno(nAlumno.ID);
-                    //Consultar a Repositorio Familiares
-                    //nAlumno.ListaFamiliares = new List<Familiar>();
 
-                    //Consultar a repositorio fechas_inscripcion
-                    //nAlumno.ListaFechasInscripcion = new List<DateTime>();
-
-                    //Consultar a repositorio fechas_pago
-                    //nAlumno.ListaFechasPago = new List<DateTime>();
-
-                    //nAlumno.FechaInscripcion = Convert.ToDateTime(reader["fecha_inscripcion"]);
-                    //nAlumno.ListaFamiliares = GetFamiliares(nAlumno.ID);
+                    nAlumno.ListaFamiliares = nRFamiliar.GetFamiliares(nAlumno.ID);
+                    nAlumno.ListaFechasInscripcion = GetFechasInscripcion(nAlumno.ID);
+                    nAlumno.ListaFechasPago = GetFechasPago(nAlumno.ID);
+                    nAlumno.ListaTelefonos = RepositorioHelper.GetTelefonosPersona(nAlumno.ID);
+                    nAlumno.CursoAlumno = RepositorioHelper.GetCursoAlumno(nAlumno.ID);
+                    nAlumno.GrupoAlumno = RepositorioHelper.GetGrupoAlumno(nAlumno.CursoAlumno.IDGrupo);
+                    nAlumno.EscuelaCursoAlumno = RepositorioHelper.GetEscuelaCursoAlumno(nAlumno.EscuelaCursoAlumno.ID);
+                    nAlumno.EstablecimientoAlumno = RepositorioHelper.GetEstablecimientoAcademico(nAlumno.EstablecimientoAlumno.ID);
+                    
                     ListaAlumnos.Add(nAlumno);
                 }
             }
@@ -133,6 +129,8 @@ namespace Proyecto.Models
 
                 command.ExecuteNonQuery();
 
+                AltaFechaInscripcion(nAlumno.ID, DateTime.Now);
+
                 RepositorioHelper.AltaDetallesCursos(nAlumno.ID, nAlumno.CursoAlumno.ID);
 
                 foreach (Familiar familiar in nAlumno.ListaFamiliares)
@@ -141,13 +139,14 @@ namespace Proyecto.Models
                 }
                 foreach (string telefono in nAlumno.ListaTelefonos)
                 {
-                    RepositorioHelper.AltaTelefonos(nAlumno.ID, telefono);
+                    RepositorioHelper.AltaTelefono(nAlumno.ID, telefono);
                 }
 
                 if (nAlumno.EscuelaCursoAlumno.ID >= 1)
                 {
                     RepositorioHelper.AltaEscuelasCursos(nAlumno.ID, nAlumno.EscuelaCursoAlumno.ID);
                 }
+
 
             }
         }
@@ -216,7 +215,7 @@ namespace Proyecto.Models
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM fechas_inscripciones" +
+                command.CommandText = "SELECT * FROM fechas_inscripciones " +
                                             "WHERE id_alumno = " + IDAlumno.ToString();
 
                 SQLiteDataReader reader = command.ExecuteReader();
@@ -248,7 +247,7 @@ namespace Proyecto.Models
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM fechas_pagos" +
+                command.CommandText = "SELECT * FROM fechas_pagos " +
                                             "WHERE id_alumno = " + IDAlumno.ToString();
 
                 SQLiteDataReader reader = command.ExecuteReader();
@@ -262,6 +261,56 @@ namespace Proyecto.Models
                 }
 
                 return ListaFechasPago;
+            }
+        }
+
+        /// <summary>
+        /// Registra la fecha de inscripcion del alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <param name="FechaInscripcion"></param>
+        public static void AltaFechaInscripcion(int IDAlumno, DateTime FechaInscripcion)
+        {
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+
+                command.CommandText = "INSERT INTO fechas_inscripciones(id_alumno, fecha_inscripcion) " +
+                                        "VALUES(@id_alumno, @fecha_inscripcion)";
+                //command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
+                command.Parameters.AddWithValue("@id_alumno", IDAlumno);
+                command.Parameters.AddWithValue("@fecha_inscripcion", FechaInscripcion);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Registra la fecha de pago del alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <param name="FechaPago"></param>
+        public static void AltaFechasPagos(int IDAlumno, DateTime FechaPago)
+        {
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+
+                command.CommandText = "INSERT INTO fechas_pagos(id_alumno, fecha_pago) " +
+                                        "VALUES(@id_alumno, @fecha_pago)";
+                //command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
+                command.Parameters.AddWithValue("@id_alumno", IDAlumno);
+                command.Parameters.AddWithValue("@fecha_pago", FechaPago);
+
+                command.ExecuteNonQuery();
             }
         }
     }

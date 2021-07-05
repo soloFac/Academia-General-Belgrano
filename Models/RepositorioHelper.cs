@@ -149,7 +149,7 @@ namespace Proyecto.Models
         /// </summary>
         /// <param name="IDAlumno"></param>
         /// <param name="Telefono"></param>
-        public static void AltaTelefonos(int IDAlumno, string Telefono)
+        public static void AltaTelefono(int IDAlumno, string Telefono)
         {
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
 
@@ -255,7 +255,8 @@ namespace Proyecto.Models
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM cursos" +
+                command.CommandText = "SELECT * FROM detalles_cursos " +
+                                            "INNER JOIN cursos USING(id_curso) " +
                                             "WHERE id_alumno = " + IDAlumno.ToString();
 
                 SQLiteDataReader reader = command.ExecuteReader();
@@ -276,7 +277,7 @@ namespace Proyecto.Models
         /// </summary>
         /// <param name="IDCurso"></param>
         /// <returns></returns>
-        public static Grupo GetGrupoAlumno(int IDCurso)
+        public static Grupo GetGrupoAlumno(int IDGrupo)
         {
             Grupo nGrupo = new Grupo();
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
@@ -286,14 +287,14 @@ namespace Proyecto.Models
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM grupos" +
-                                            "WHERE id_curso = " + IDCurso.ToString();
+                command.CommandText = "SELECT * FROM grupos " +
+                                            "WHERE id_grupo = " + IDGrupo.ToString();
 
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    nGrupo.ID = Convert.ToInt32(reader["id_curso"]);
+                    nGrupo.ID = Convert.ToInt32(reader["id_grupo"]);
                     nGrupo.Nombre = reader["nombre"].ToString();
                 }
 
@@ -301,5 +302,98 @@ namespace Proyecto.Models
             }
         }
 
+        /// <summary>
+        /// Retorna una Escuela del Curso elegido por el alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <returns></returns>
+        public static EscuelaCurso GetEscuelaCursoAlumno(int IDEscuelaCurso)
+        {
+            EscuelaCurso nEscuelaCurso = new EscuelaCurso();
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM escuelas_cursos " +
+                                            "WHERE id_escuela_curso = " + IDEscuelaCurso.ToString();
+
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    nEscuelaCurso.ID = Convert.ToInt32(reader["id_escuela_curso"]);
+                    nEscuelaCurso.Nombre = reader["nombre"].ToString();
+                    nEscuelaCurso.IDCurso = Convert.ToInt32(reader["id_curso"]);
+                }
+
+                return nEscuelaCurso;
+            }
+        }
+
+        /// <summary>
+        /// Retorna el establecimiento academico del alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <returns></returns>
+        public static EstablecimientoAcademico GetEstablecimientoAcademico(int IDEstablecimiento)
+        {
+            EstablecimientoAcademico nEstablecimiento = new EstablecimientoAcademico();
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM establecimientos_academicos " +
+                                            "WHERE id_establecimiento_academico = " + IDEstablecimiento.ToString();
+
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    nEstablecimiento.ID = Convert.ToInt32(reader["id_establecimiento_academico"]);
+                    nEstablecimiento.Nombre = reader["nombre"].ToString();
+                }
+
+                return nEstablecimiento;
+            }
+        }
+
+        /// <summary>
+        /// Retorna la lista de telefonos de la persona
+        /// </summary>
+        /// <param name="IDCurso"></param>
+        /// <returns></returns>
+        public static List<string> GetTelefonosPersona(int IDPersona)
+        {
+            List<string> ListaTelefonos = new List<string>();
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM telefonos " +
+                                            "WHERE id_persona = " + IDPersona.ToString();
+
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string Telefono;
+                    Telefono = reader["telefono"].ToString();
+                    ListaTelefonos.Add(Telefono);
+                }
+
+                return ListaTelefonos;
+            }
+        }
+
+        
     }
 }

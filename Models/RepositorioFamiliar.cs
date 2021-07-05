@@ -27,15 +27,14 @@ namespace Proyecto.Models
                 {
                     var nFamiliar = new Familiar();
                     nFamiliar.ID = Convert.ToInt32(reader["id_persona"]);
-                    nFamiliar.Nombre = reader["nombre"].ToString();
                     nFamiliar.Apellido= reader["apellido"].ToString();
                     nFamiliar.Nombre = reader["nombre"].ToString();
 
                     nFamiliar.IDAlumno = Convert.ToInt32(reader["id_alumno"]);
-                    nFamiliar.Telefono = reader["telefono"].ToString();
                     nFamiliar.Ocupacion = reader["ocupacion"].ToString();
                     nFamiliar.Empresa = reader["empresa"].ToString();
                     nFamiliar.Gremio = reader["gremio"].ToString();
+                    nFamiliar.ListaTelefonos = RepositorioHelper.GetTelefonosPersona(nFamiliar.ID);
 
                     ListaFamiliares.Add(nFamiliar);
                 }
@@ -67,7 +66,10 @@ namespace Proyecto.Models
 
                 command.ExecuteNonQuery();
 
-                RepositorioHelper.AltaTelefonos(nFamiliar.ID, nFamiliar.Telefono);
+                foreach (string telefono in nFamiliar.ListaTelefonos)
+                {
+                    RepositorioHelper.AltaTelefono(nFamiliar.ID, telefono);
+                }
 
                 command.CommandText = "INSERT INTO familiares(id_persona, id_alumno, ocupacion, empresa, gremio) " +
                                                             "VALUES(@id_persona, @id_alumno, @ocupacion, @empresa, @gremio)";
@@ -104,7 +106,7 @@ namespace Proyecto.Models
         /// Recibe el id de un alumno y retorna una lista de familiares coincidentes con ese IDAlumno
         /// </summary>
         /// <param name="IDAlumno"></param>
-        public List<Familiar> BusquedaFamiliarIDAlumno(int IDAlumno)
+        public List<Familiar> GetFamiliares(int IDAlumno)
         {
             List<Familiar> ListaFamiliares = new List<Familiar>();
             ListaFamiliares = GetAll();
