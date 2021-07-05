@@ -60,19 +60,14 @@ namespace Proyecto.Models
                 nFamiliar.ID = GetLastIDPersonas() + 1;
 
                 //INSERCION DE DATOS
-                command.CommandText = "INSERT INTO personas(id_persona, apellido, nombre) " +
-                                        "VALUES(@id_persona, @apellido, @nombre)";
-                command.Parameters.AddWithValue("@id_persona", nFamiliar.ID);
+                command.CommandText = "INSERT INTO personas(apellido, nombre) " +
+                                        "VALUES(@apellido, @nombre)";
                 command.Parameters.AddWithValue("@apellido", nFamiliar.Apellido);
                 command.Parameters.AddWithValue("@nombre", nFamiliar.Nombre);
 
                 command.ExecuteNonQuery();
 
-                command.CommandText = "INSERT INTO telefonos(id_telefono, telefono, id_persona) " +
-                                        "VALUES(@id_telefono, @telefono, @id_persona)";
-                command.Parameters.AddWithValue("@id_telefono", IDTelefono);
-                command.Parameters.AddWithValue("@telefono", nFamiliar.Telefono);
-                command.Parameters.AddWithValue("@id_persona", nFamiliar.ID);
+                RepositorioHelper.AltaTelefonos(nFamiliar.ID, nFamiliar.Telefono);
 
                 command.CommandText = "INSERT INTO familiares(id_persona, id_alumno, ocupacion, empresa, gremio) " +
                                                             "VALUES(@id_persona, @id_alumno, @ocupacion, @empresa, @gremio)";
@@ -109,7 +104,6 @@ namespace Proyecto.Models
         /// Recibe el id de un alumno y retorna una lista de familiares coincidentes con ese IDAlumno
         /// </summary>
         /// <param name="IDAlumno"></param>
-        /// <returns>List<Familiar></returns>
         public List<Familiar> BusquedaFamiliarIDAlumno(int IDAlumno)
         {
             List<Familiar> ListaFamiliares = new List<Familiar>();
@@ -192,22 +186,24 @@ namespace Proyecto.Models
         /// Obtiene el ultimo id de la lista de familiares, debe sumarle 1 para insertarlo en la base de datos
         /// </summary>
         /// <returns></returns>
-        public int GetLastIDFamiliares()
+        public int GetLastIDFamiliar()
         {
+            int IDPersona = 0;
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
             using (var connection = new SQLiteConnection(cadena))
             {
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT id_familiar FROM familiares" +
-                                            "ORDER BY id_familiar ASC " +
-                                            "LIMIT 1";
+                command.CommandText = "SELECT * FROM familiares " +
+                                             "WHERE id_persona = (SELECT MAX(id_persona) FROM familiares)";
                 SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    IDPersona = Convert.ToInt32(reader["id_persona"]);
+                }
 
-                int IDFamiliar = Convert.ToInt32(reader["id_familiar"]);
-
-                return IDFamiliar;
+                return IDPersona;
             }
         }
 
@@ -217,20 +213,22 @@ namespace Proyecto.Models
         /// <returns>IDTelefono</returns>
         public int GetLastIDTelefonos()
         {
+            int IDPersona = 0;
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
             using (var connection = new SQLiteConnection(cadena))
             {
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT id_telefono FROM telefonos" +
-                                            "ORDER BY id_telefono ASC " +
-                                            "LIMIT 1";
+                command.CommandText = "SELECT * FROM telefonos " +
+                                             "WHERE id_telefono = (SELECT MAX(id_telefono) FROM telefonos)";
                 SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    IDPersona = Convert.ToInt32(reader["id_telefono"]);
+                }
 
-                int IDTelefono = Convert.ToInt32(reader["id_telefono"]);
-
-                return IDTelefono;
+                return IDPersona;
             }
         }
 
@@ -240,18 +238,20 @@ namespace Proyecto.Models
         /// <returns>IDFamiliar</returns>
         public int GetLastIDPersonas()
         {
+            int IDPersona = 0;
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
             using (var connection = new SQLiteConnection(cadena))
             {
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT id_persona FROM personas" +
-                                            "ORDER BY id_persona ASC " +
-                                            "LIMIT 1";
+                command.CommandText = "SELECT * FROM personas " +
+                                             "WHERE id_persona = (SELECT MAX(id_persona) FROM personas)";
                 SQLiteDataReader reader = command.ExecuteReader();
-
-                int IDPersona = Convert.ToInt32(reader["id_persona"]);
+                while (reader.Read())
+                {
+                    IDPersona = Convert.ToInt32(reader["id_persona"]);
+                }
 
                 return IDPersona;
             }

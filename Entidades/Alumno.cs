@@ -56,9 +56,10 @@ namespace Proyecto.Entidades
         private string domicilio;
 
         private Turnos turno;
-        private int iDEstablecimiento;
-        private int iDGrupo;
-        private int iDCurso;
+        private EstablecimientoAcademico establecimientoAlumno;
+        private Grupo grupoAlumno;
+        private Curso cursoAlumno;
+        private EscuelaCurso escuelaCursoAlumno;
         private bool estado;
         private Escuela instituto;
         private List<Familiar> listaFamiliares;
@@ -80,28 +81,37 @@ namespace Proyecto.Entidades
 
 
         public Turnos Turno { get => turno; set => turno = value; }
-        //public Grupos Grupo { get => grupo; set => grupo = value; }
+        public EstablecimientoAcademico EstablecimientoAlumno { get => establecimientoAlumno; set => establecimientoAlumno = value; }
+        public Grupo GrupoAlumno { get => grupoAlumno; set => grupoAlumno = value; }
+        public Curso CursoAlumno { get => cursoAlumno; set => cursoAlumno = value; }
         public Escuela Instituto { get => instituto; set => instituto = value; }
+        public EscuelaCurso EscuelaCursoAlumno { get => escuelaCursoAlumno; set => escuelaCursoAlumno = value; }
         public List<Familiar> ListaFamiliares { get => listaFamiliares; set => listaFamiliares = value; }
         public List<DateTime> ListaFechasPago { get => listaFechasPago; set => listaFechasPago = value; }
         public List<DateTime> ListaFechasInscripcion { get => listaFechasInscripcion; set => listaFechasInscripcion = value; }
         public List<string> ListaTelefonos { get => listaTelefonos; set => listaTelefonos = value; }
-        public int IDEstablecimiento { get => iDEstablecimiento; set => iDEstablecimiento = value; }
-        public int IDGrupo { get => iDGrupo; set => iDGrupo = value; }
-        public int IDCurso { get => iDCurso; set => iDCurso = value; }
 
         public Alumno() : base ()
         {
             //AGREGAR 
             //FechaInscripcion = DateTime.Now;
             this.Estado = false;
-            ListaFamiliares = new List<Familiar>();
+            this.Instituto = new Escuela();
+            this.EstablecimientoAlumno = new EstablecimientoAcademico();
+            this.GrupoAlumno = new Grupo();
+            this.CursoAlumno = new Curso();
+            this.EscuelaCursoAlumno = new EscuelaCurso();
+            
+            this.ListaFamiliares = new List<Familiar>();
+            this.ListaTelefonos = new List<string>();
+            this.ListaFechasInscripcion = new List<DateTime>();
+            this.ListaFechasPago = new List<DateTime>();
         }
 
         public Alumno(int ID, string Nombre, string Apellido, string Mail, string DNI,
                    DateTime FechaNacimiento, string Provincia, string Departamento, string Localidad, string Domicilio,
-                   Turnos Turno, int IDEstablecimiento, int IDGrupo, int IDCurso, DateTime FechaInscripcion, 
-                   Escuela Instituto, List<DateTime> ListaFechasInscripcion, List<DateTime> ListaFechasPago) : 
+                   Turnos Turno, EstablecimientoAcademico EstablecimientoAlumno, Grupo GrupoAlumno, Curso CursoAlumno, EscuelaCurso EscuelaCursoAlumno,
+                   DateTime FechaInscripcion, Escuela Instituto, List<DateTime> ListaFechasInscripcion, List<DateTime> ListaFechasPago, List<string> ListaTelefonos) : 
             base (ID, Nombre, Apellido)
         {
             this.ID = ID;
@@ -116,16 +126,18 @@ namespace Proyecto.Entidades
             this.Localidad = Localidad;
             this.Domicilio = Domicilio;
             this.Turno = Turno;
-            this.IDEstablecimiento = IDEstablecimiento;
-            this.IDGrupo = IDGrupo;
-            this.IDCurso = IDCurso;
+            this.EstablecimientoAlumno = EstablecimientoAlumno;
+            this.GrupoAlumno = GrupoAlumno;
+            this.CursoAlumno = CursoAlumno;
+            this.EscuelaCursoAlumno = EscuelaCursoAlumno;
             //AGREGAR 
             //FechaInscripcion = DateTime.Now;
             this.Estado = false;
             this.Instituto = Instituto;
             this.ListaFamiliares = new List<Familiar>(3);
-            this.ListaFechasInscripcion = new List<DateTime>();
-            this.ListaFechasPago = new List<DateTime>();
+            this.ListaTelefonos = new List<string>(3);
+            this.ListaFechasInscripcion = ListaFechasInscripcion;
+            this.ListaFechasPago = ListaFechasPago;
         }
         public void AgregarFamiliar(Familiar nFamiliar)
         {

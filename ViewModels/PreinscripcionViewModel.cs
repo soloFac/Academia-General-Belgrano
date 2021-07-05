@@ -32,7 +32,7 @@ namespace Proyecto.ViewModels
         public int IDCurso { get; set; }
         public int IDEscuelaCurso { get; set; }
 
-        //public List<DateTime> ListaFechasInscripcion { get; set; }
+        public List<DateTime> ListaFechasInscripcion { get; set; }
         //public List<DateTime> ListaFechasPago { get; set; }
 
         public PreinscripcionViewModel() : base()
@@ -43,7 +43,8 @@ namespace Proyecto.ViewModels
             this.ListaFamiliares = new List<FamiliarViewModel>();
             this.Instituto = new EscuelaViewModel();
             this.ListaTelefonos = new List<string>(3);
-            //this.ListaFechasInscripcion = new List<DateTime>();
+            this.ListaFechasInscripcion = new List<DateTime>();
+            this.ListaFechasInscripcion.Add(DateTime.Now);
             //this.ListaFechasPago = new List<DateTime>();
         }
 
@@ -74,8 +75,9 @@ namespace Proyecto.ViewModels
             this.Instituto = Instituto;
             this.ListaFamiliares = new List<FamiliarViewModel>(3);
             this.ListaTelefonos = new List<string>(3);
+            this.ListaFechasInscripcion = new List<DateTime>();
+            this.ListaFechasInscripcion.Add(DateTime.Now);
 
-            //this.ListaFechasInscripcion = new List<DateTime>();
             //this.ListaFechasPago = new List<DateTime>();
         }
     }

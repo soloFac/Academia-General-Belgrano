@@ -50,11 +50,8 @@ namespace Proyecto.Models
 
                 var command = connection.CreateCommand();
 
-                nEscuela.ID = GetLastIDEscuelas() + 1;
-
-                command.CommandText = "INSERT INTO Escuelas(id_escuela, nombre, domicilio, telefono, mail, localidad, departamento, provincia) " +
-                                                    "VALUES(@id_escuela, @nombre, @domicilio, @telefono, @mail, @localidad, @departamento, @provincia)";
-                command.Parameters.AddWithValue("@id_escuela", nEscuela.ID);
+                command.CommandText = "INSERT INTO Escuelas(nombre, domicilio, telefono, mail, localidad, departamento, provincia) " +
+                                                    "VALUES(@nombre, @domicilio, @telefono, @mail, @localidad, @departamento, @provincia)";
                 command.Parameters.AddWithValue("@nombre", nEscuela.Nombre);
                 command.Parameters.AddWithValue("@domicilio", nEscuela.Domicilio);
                 command.Parameters.AddWithValue("@telefono", nEscuela.Telefono);
@@ -115,18 +112,22 @@ namespace Proyecto.Models
         /// <returns></returns>
         public int GetLastIDEscuelas()
         {
+            int IDEscuela = 0;
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
             using (var connection = new SQLiteConnection(cadena))
             {
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT id_escuela FROM personas" +
-                                            "ORDER BY id_escuela ASC " +
-                                            "LIMIT 1";
+                command.CommandText = "SELECT * FROM escuelas " +
+                                             "WHERE id_escuela = (SELECT MAX(id_escuela) FROM escuelas)";
+
                 SQLiteDataReader reader = command.ExecuteReader();
 
-                int IDEscuela = Convert.ToInt32(reader["id_escuela"]);
+                while (reader.Read())
+                {
+                    IDEscuela = Convert.ToInt32(reader["id_escuela"]);
+                }
 
                 return IDEscuela;
             }

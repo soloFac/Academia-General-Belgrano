@@ -41,6 +41,10 @@ namespace Proyecto.Controllers
 
         public IActionResult Preinscripcion()
         {
+            RepositorioAlumno RAlumno = new RepositorioAlumno();
+
+            List<Alumno> ListaAlumnos = RAlumno.GetAll();
+
             PreinscripcionViewModel PreinscripcionVM = new PreinscripcionViewModel();
             PreinscripcionVM.ListaGrupos = mapper.Map<List<GrupoViewModel>>(RepositorioHelper.GetAllGrupos());
             PreinscripcionVM.ListaCursos = mapper.Map<List<CursoViewModel>>(RepositorioHelper.GetAllCursos());
@@ -50,19 +54,21 @@ namespace Proyecto.Controllers
             return View(PreinscripcionVM);
         }
 
-        public IActionResult CrearAlumno(AlumnoViewModel nAlumnoVM)
+        public IActionResult CrearAlumno(PreinscripcionViewModel nPreinscripcionVM)
         {
             if (ModelState.IsValid)
             {
                 RepositorioAlumno RAlumno = new RepositorioAlumno();
 
-                Alumno nAlumno = mapper.Map<Alumno>(nAlumnoVM);
+                List<Alumno> ListaAlumnos = RAlumno.GetAll();
+
+                Alumno nAlumno = mapper.Map<Alumno>(nPreinscripcionVM);
                 RAlumno.AltaAlumno(nAlumno);
 
-                return Content(nAlumnoVM.ListaFamiliares[0].Apellido);
+                return Content(ListaAlumnos.ToString());
             }
 
-            return Content(nAlumnoVM.ListaFamiliares[0].Apellido);
+            return Content("El modelo no es valido");
         }
 
         //public IActionResult AltaAlumno()
