@@ -46,7 +46,7 @@ namespace Proyecto.Models
                     nAlumno.Domicilio = reader["alumnos.domicilio"].ToString();
                     nAlumno.Turno = (Turnos) Convert.ToInt32(reader["alumnos.turno"]);
                     nAlumno.Estado = (Boolean) reader["alumnos.estado"];
-                    nAlumno.Establecimiento = (EstablecimientoAcademico) reader["id_establecimiento_academico"];
+                    nAlumno.IDEstablecimiento = Convert.ToInt32(reader["id_establecimiento_academico"]);
 
                     //ESCUELA
                     nAlumno.Instituto.ID = Convert.ToInt32(reader["id_escuela"]);
@@ -101,9 +101,9 @@ namespace Proyecto.Models
                 command.ExecuteNonQuery();
 
                 command.CommandText = "INSERT INTO alumnos(id_persona , mail, dni, fecha_nacimiento, provincia, departamento, localidad, domicilio, " +
-                                                            "turno, id_establecimiento_academico, id_curso, estado) " +
+                                                            "turno, id_establecimiento_academico, estado) " +
                                                             "VALUES(@id_persona, @mail, @dni, @fecha_nacimiento, @provincia, @departamento, @localidad, " +
-                                                            "@domicilio, @turno, @id_establecimiento_academico, @id_curso, @estado)";
+                                                            "@domicilio, @turno, @id_establecimiento_academico, @estado)";
                 command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
                 command.Parameters.AddWithValue("@mail", nAlumno.Mail);
                 command.Parameters.AddWithValue("@dni", nAlumno.DNI);
@@ -113,8 +113,6 @@ namespace Proyecto.Models
                 command.Parameters.AddWithValue("@localidad", nAlumno.Localidad);
                 command.Parameters.AddWithValue("@domicilio", nAlumno.Domicilio);
                 command.Parameters.AddWithValue("@turno", nAlumno.Turno);
-                command.Parameters.AddWithValue("@id_establecimiento_academico", nAlumno.Establecimiento);
-                command.Parameters.AddWithValue("@id_curso", nAlumno.Curso);
                 command.Parameters.AddWithValue("@estado", nAlumno.Estado);
 
                 command.ExecuteNonQuery();

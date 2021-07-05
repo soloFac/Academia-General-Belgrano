@@ -11,37 +11,37 @@ namespace Proyecto.Entidades
         Tarde
     }
 
-    public enum EstablecimientoAcademico
-    {
-        Capital,
-        VillaQuinteros,
-        JuanBautistaAlberdi,
-        Virtual
-    }
+    //public enum EstablecimientoAcademico
+    //{
+    //    Capital,
+    //    VillaQuinteros,
+    //    JuanBautistaAlberdi,
+    //    Virtual
+    //}
 
-    public enum Grupos
-    {
-        FuerzasArmadas,
-        FuerzasSeguridad,
-        Capacitacion
-    }
+    //public enum Grupos
+    //{
+    //    FuerzasArmadas,
+    //    FuerzasSeguridad,
+    //    Capacitacion
+    //}
 
-    public enum Cursos
-    {
-        Ejercito,
-        Armada,
-        FuerzaAerea,
-        Gendarmeria,
-        PrefecturaNaval,
-        PoliciaFederal,
-        PoliciaFederalSeguridadAeropuertaria,
-        PoliciaTucuman,
-        PreparatoriaVocacional,
-        CursoAdaptacionMilitar,
-        AsistenteSeguridadyDefensa,
-        EntrenamientoCompetenciasEmocionales,
-        AdiestramientoFisicoIntegral
-    }
+    //public enum Cursos
+    //{
+    //    Ejercito,
+    //    Armada,
+    //    FuerzaAerea,
+    //    Gendarmeria,
+    //    PrefecturaNaval,
+    //    PoliciaFederal,
+    //    PoliciaFederalSeguridadAeropuertaria,
+    //    PoliciaTucuman,
+    //    PreparatoriaVocacional,
+    //    CursoAdaptacionMilitar,
+    //    AsistenteSeguridadyDefensa,
+    //    EntrenamientoCompetenciasEmocionales,
+    //    AdiestramientoFisicoIntegral
+    //}
 
 
 
@@ -56,9 +56,9 @@ namespace Proyecto.Entidades
         private string domicilio;
 
         private Turnos turno;
-        private EstablecimientoAcademico establecimiento;
-        private Grupos grupo;
-        private Cursos curso;
+        private int iDEstablecimiento;
+        private int iDGrupo;
+        private int iDCurso;
         private bool estado;
         private Escuela instituto;
         private List<Familiar> listaFamiliares;
@@ -79,16 +79,16 @@ namespace Proyecto.Entidades
 
 
         public Turnos Turno { get => turno; set => turno = value; }
-        public EstablecimientoAcademico Establecimiento { get => establecimiento; set => establecimiento = value; }
         //public Grupos Grupo { get => grupo; set => grupo = value; }
-        public Cursos Curso { get => curso; set => curso = value; }
         public bool Estado { get => estado; set => estado = value; }
         public Escuela Instituto { get => instituto; set => instituto = value; }
         public List<Familiar> ListaFamiliares { get => listaFamiliares; set => listaFamiliares = value; }
         public List<DateTime> ListaFechasPago { get => listaFechasPago; set => listaFechasPago = value; }
         public List<DateTime> ListaFechasInscripcion { get => listaFechasInscripcion; set => listaFechasInscripcion = value; }
-        public Grupos Grupo { get => grupo; set => grupo = value; }
         public List<string> ListaTelefonos { get => listaTelefonos; set => listaTelefonos = value; }
+        public int IDEstablecimiento { get => iDEstablecimiento; set => iDEstablecimiento = value; }
+        public int IDGrupo { get => iDGrupo; set => iDGrupo = value; }
+        public int IDCurso { get => iDCurso; set => iDCurso = value; }
 
         public Alumno() : base ()
         {
@@ -100,8 +100,8 @@ namespace Proyecto.Entidades
 
         public Alumno(int ID, string Nombre, string Apellido, string Mail, string DNI,
                    DateTime FechaNacimiento, string Provincia, string Departamento, string Localidad, string Domicilio,
-                   Turnos Turno, EstablecimientoAcademico Establecimiento, Grupos Grupo, Cursos Curso, DateTime FechaInscripcion, 
-                   bool estado, Escuela Instituto, List<DateTime> ListaFechasInscripcion, List<DateTime> ListaFechasPago) : 
+                   Turnos Turno, int IDEstablecimiento, int IDGrupo, int IDCurso, DateTime FechaInscripcion, 
+                   Escuela Instituto, List<DateTime> ListaFechasInscripcion, List<DateTime> ListaFechasPago) : 
             base (ID, Nombre, Apellido)
         {
             this.ID = ID;
@@ -116,8 +116,9 @@ namespace Proyecto.Entidades
             this.Localidad = Localidad;
             this.Domicilio = Domicilio;
             this.Turno = Turno;
-            this.Establecimiento = Establecimiento;
-            this.Grupo = Grupo;
+            this.IDEstablecimiento = IDEstablecimiento;
+            this.IDGrupo = IDGrupo;
+            this.IDCurso = 
             //AGREGAR 
             //FechaInscripcion = DateTime.Now;
             this.Estado = false;

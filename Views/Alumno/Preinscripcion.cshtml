@@ -1,4 +1,4 @@
-﻿@model Proyecto.ViewModels.AlumnoViewModel
+﻿@model Proyecto.ViewModels.PreinscripcionViewModel
 
 <section>
     <article>
@@ -131,15 +131,27 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
+
+                
+                <label asp-for="@Model.IDGrupo">Fuerza</label>
+                <select asp-for="@Model.IDGrupo" class="form-control" required>
+                    @foreach (GrupoViewModel grupo in Model.ListaGrupos)
+                    {
+                        <option value="@grupo.ID">@grupo.Nombre</option>
+                    }
+                </select>
+
+
+
+                @*<div class="mb-3">
                     <label asp-for="@Model.Establecimiento">Establecimiento Academico</label>
                     <select asp-for="@Model.Establecimiento" asp-items="@Html.GetEnumSelectList<EstablecimientoAcademico>()" class="form-control" required>
                     </select>
-                </div>
+                </div>*@
 
                 <!--------------------------------------- GRUPOS ---------------------------------------->
 
-                <div class="mb-3" id="div-categoria">
+                @*<div class="mb-3" id="div-categoria">
                     <label asp-for="@Model.Grupo">Fuerza</label>
                     <select asp-for="@Model.Grupo" class="form-control" required>
                         <optgroup label="Fuerzas Armadas">
@@ -162,35 +174,35 @@
                             <option value="Adiestramiento Fisico Integral">Adiestramiento Físico Integral</option>
                         </optgroup>
                     </select>
-                </div>
+                </div>*@
 
                 <!--------- ---------- FUERZAS ARMADAS ----------------->
                 <!-- EJERCITO -->
-                <div class="mb-3" id="div-ejercito">
-                    <label asp-for="@Model.Curso">Escuela</label>
-                    <select asp-for="@Model.Curso" class="form-control" required>
+                <!--<div class="mb-3" id="div-ejercito">
+                    <label asp-for="Model.Curso">Escuela</label>
+                    <select asp-for="Model.Curso" class="form-control" required>
                         <option value="Colegio Militar de la Nacion">Colegio Militar de la Nacion</option>
                         <option value="Escuela de Suboficiales del Ejercito Sargento Cabral">Escuela de Suboficiales del Ejercito Sargento Cabral</option>
                     </select>
-                </div>
+                </div>-->
 
                 <!-- ARMADA -->
-                <div class="mb-3" id="div-armada">
-                    <label asp-for="@Model.Curso">Escuela</label>
-                    <select asp-for="@Model.Curso" class="form-control" required>
+                <!--<div class="mb-3" id="div-armada">
+                    <label asp-for="Model.Curso">Escuela</label>
+                    <select asp-for="Model.Curso" class="form-control" required>
                         <option value="Escuela Naval Militar">Escuela Naval Militar</option>
                         <option value="Escuela de Suboficiales de la Armada">Escuela de Suboficiales de la Armada</option>
                     </select>
-                </div>
+                </div>-->
 
                 <!-- FUERZA AEREA -->
-                <div class="mb-3" id="div-fuerza-aerea">
-                    <label asp-for="@Model.Curso">Escuela</label>
-                    <select asp-for="@Model.Curso" class="form-control" required>
+                <!--<div class="mb-3" id="div-fuerza-aerea">
+                    <label asp-for="Model.Curso">Escuela</label>
+                    <select asp-for="Model.Curso" class="form-control" required>
                         <option value="Escuela de Aviacion Militar">Escuela de Aviacion Militar</option>
                         <option value="Escuela de Suboficiales de la Fuerza Aerea">Escuela de Suboficiales de la Fuerza Aerea</option>
                     </select>
-                </div>
+                </div>-->
 
             </fieldset>
 

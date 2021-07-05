@@ -41,7 +41,12 @@ namespace Proyecto.Controllers
 
         public IActionResult Preinscripcion()
         {
-            return View(new AlumnoViewModel());
+            PreinscripcionViewModel PreinscripcionVM = new PreinscripcionViewModel();
+            PreinscripcionVM.ListaGrupos = mapper.Map<List<GrupoViewModel>>(RepositorioHelper.GetAllGrupos());
+            PreinscripcionVM.ListaCursos = mapper.Map<List<CursoViewModel>>(RepositorioHelper.GetAllCursos());
+            PreinscripcionVM.ListaEstablecimientos = mapper.Map<List<EstablecimientoAcademicoViewModel>>(RepositorioHelper.GetAllEstablecimientosAcademicos());
+
+            return View(PreinscripcionVM);
         }
 
         public IActionResult CrearAlumno(AlumnoViewModel nAlumnoVM)

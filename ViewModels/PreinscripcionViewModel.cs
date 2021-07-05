@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Proyecto.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Proyecto.Entidades;
 
 namespace Proyecto.ViewModels
 {
-    public class AlumnoViewModel : PersonaViewModel
+    public class PreinscripcionViewModel : PersonaViewModel
     {
         public string Mail { get; set; }
         public string DNI { get; set; }
@@ -18,19 +17,23 @@ namespace Proyecto.ViewModels
         public string Domicilio { get; set; }
 
         public Turnos Turno { get; set; }
-        public EstablecimientoAcademico Establecimiento { get; set; }
+        public List<EstablecimientoAcademicoViewModel> ListaEstablecimientos { get; set; }
         //public Grupos Grupo;
-        public int IDGrupo { get; set; }
-        public int IDCurso { get; set; }
+        public List<GrupoViewModel> ListaGrupos { get; set; }
+        public List<CursoViewModel> ListaCursos { get; set; }
         public bool Estado { get; set; }
         public EscuelaViewModel Instituto { get; set; }
         public List<FamiliarViewModel> ListaFamiliares { get; set; }
         public List<string> ListaTelefonos { get; set; }
 
+        public int IDEstablecimiento { get; set; }
+        public int IDGrupo { get; set; }
+        public int IDCurso { get; set; }
+
         //public List<DateTime> ListaFechasInscripcion { get; set; }
         //public List<DateTime> ListaFechasPago { get; set; }
 
-        public AlumnoViewModel() : base()
+        public PreinscripcionViewModel() : base()
         {
             //AGREGAR 
             //FechaInscripcion = DateTime.Now;
@@ -42,9 +45,9 @@ namespace Proyecto.ViewModels
             //this.ListaFechasPago = new List<DateTime>();
         }
 
-        public AlumnoViewModel(int ID, string Nombre, string Apellido, string Mail, string DNI,
+        public PreinscripcionViewModel(int ID, string Nombre, string Apellido, string Mail, string DNI,
                    DateTime FechaNacimiento, string Provincia, string Departamento, string Localidad, string Domicilio,
-                   Turnos Turno, EstablecimientoAcademico Establecimiento, int IDGrupo, int IDCurso, 
+                   Turnos Turno, int IDEstablecimiento, int IDGrupo, int IDCurso,
                    EscuelaViewModel Instituto) :
             base(ID, Nombre, Apellido) //, List<DateTime> ListaFechasInscripcion, List<DateTime> ListaFechasPago)
         {
@@ -60,7 +63,7 @@ namespace Proyecto.ViewModels
             this.Localidad = Localidad;
             this.Domicilio = Domicilio;
             this.Turno = Turno;
-            this.Establecimiento = Establecimiento;
+            this.IDEstablecimiento = IDEstablecimiento;
             this.IDGrupo = IDGrupo;
             this.IDCurso = IDCurso;
             //AGREGAR 
@@ -73,6 +76,5 @@ namespace Proyecto.ViewModels
             //this.ListaFechasInscripcion = new List<DateTime>();
             //this.ListaFechasPago = new List<DateTime>();
         }
-
     }
 }
