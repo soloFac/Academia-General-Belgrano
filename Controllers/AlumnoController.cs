@@ -44,6 +44,7 @@ namespace Proyecto.Controllers
             PreinscripcionViewModel PreinscripcionVM = new PreinscripcionViewModel();
             PreinscripcionVM.ListaGrupos = mapper.Map<List<GrupoViewModel>>(RepositorioHelper.GetAllGrupos());
             PreinscripcionVM.ListaCursos = mapper.Map<List<CursoViewModel>>(RepositorioHelper.GetAllCursos());
+            PreinscripcionVM.ListaEscuelasCursos = mapper.Map<List<EscuelaCursoViewModel>>(RepositorioHelper.GetAllEscuelasCursos());
             PreinscripcionVM.ListaEstablecimientos = mapper.Map<List<EstablecimientoAcademicoViewModel>>(RepositorioHelper.GetAllEstablecimientosAcademicos());
 
             return View(PreinscripcionVM);

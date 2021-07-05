@@ -17,6 +17,7 @@ namespace Proyecto
 
             CreateMap<Grupo, GrupoViewModel>().ReverseMap();
             CreateMap<Curso, CursoViewModel>().ReverseMap();
+            CreateMap<EscuelaCurso, EscuelaCursoViewModel>().ReverseMap();
             CreateMap<EstablecimientoAcademico, EstablecimientoAcademicoViewModel>().ReverseMap();
         }
 

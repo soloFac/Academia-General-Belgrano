@@ -21,6 +21,7 @@ namespace Proyecto.ViewModels
         //public Grupos Grupo;
         public List<GrupoViewModel> ListaGrupos { get; set; }
         public List<CursoViewModel> ListaCursos { get; set; }
+        public List<EscuelaCursoViewModel> ListaEscuelasCursos { get; set; }
         public bool Estado { get; set; }
         public EscuelaViewModel Instituto { get; set; }
         public List<FamiliarViewModel> ListaFamiliares { get; set; }
@@ -29,6 +30,7 @@ namespace Proyecto.ViewModels
         public int IDEstablecimiento { get; set; }
         public int IDGrupo { get; set; }
         public int IDCurso { get; set; }
+        public int IDEscuelaCurso { get; set; }
 
         //public List<DateTime> ListaFechasInscripcion { get; set; }
         //public List<DateTime> ListaFechasPago { get; set; }

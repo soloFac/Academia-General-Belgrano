@@ -65,6 +65,34 @@ namespace Proyecto.Models
             return ListaCursos;
         }
 
+        public static List<EscuelaCurso> GetAllEscuelasCursos()
+        {
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+            List<EscuelaCurso> ListaEscuelasCursos = new List<EscuelaCurso>();
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM escuelas_cursos";
+
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var nEscuelaCurso = new EscuelaCurso();
+                    nEscuelaCurso.ID = Convert.ToInt32(reader["id_escuela_curso"]);
+                    nEscuelaCurso.Nombre = reader["nombre"].ToString();
+                    nEscuelaCurso.IDCurso = Convert.ToInt32(reader["id_curso"]);
+
+                    ListaEscuelasCursos.Add(nEscuelaCurso);
+                }
+            }
+
+            return ListaEscuelasCursos;
+        }
+
         public static List<EstablecimientoAcademico> GetAllEstablecimientosAcademicos()
         {
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");

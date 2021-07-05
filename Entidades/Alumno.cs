@@ -71,6 +71,7 @@ namespace Proyecto.Entidades
 
         public string Mail { get => mail; set => mail = value; }
         public string DNI { get => dNI; set => dNI = value; }
+        public bool Estado { get => estado; set => estado = value; }
         public DateTime FechaNacimiento { get => fechaNacimiento; set => fechaNacimiento = value; }
         public string Provincia { get => provincia; set => provincia = value; }
         public string Departamento { get => departamento; set => departamento = value; }
@@ -80,7 +81,6 @@ namespace Proyecto.Entidades
 
         public Turnos Turno { get => turno; set => turno = value; }
         //public Grupos Grupo { get => grupo; set => grupo = value; }
-        public bool Estado { get => estado; set => estado = value; }
         public Escuela Instituto { get => instituto; set => instituto = value; }
         public List<Familiar> ListaFamiliares { get => listaFamiliares; set => listaFamiliares = value; }
         public List<DateTime> ListaFechasPago { get => listaFechasPago; set => listaFechasPago = value; }
@@ -118,7 +118,7 @@ namespace Proyecto.Entidades
             this.Turno = Turno;
             this.IDEstablecimiento = IDEstablecimiento;
             this.IDGrupo = IDGrupo;
-            this.IDCurso = 
+            this.IDCurso = IDCurso;
             //AGREGAR 
             //FechaInscripcion = DateTime.Now;
             this.Estado = false;

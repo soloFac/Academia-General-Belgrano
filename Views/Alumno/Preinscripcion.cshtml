@@ -131,78 +131,69 @@
                     </div>
                 </div>
 
+                @*SELECT Establecimientos Academicos*@
+                <div class="mb-3">
+                    <label asp-for="@Model.IDEstablecimiento">Establecimiento Academico</label>
+                    <select asp-for="@Model.IDEstablecimiento" class="form-control" required>
+                        @foreach (EstablecimientoAcademicoViewModel establecimiento in Model.ListaEstablecimientos)
+                        {
+                            <option value="@establecimiento.ID">@establecimiento.Nombre</option>
+                        }
+                    </select>
+                </div>
 
-                
-                <label asp-for="@Model.IDGrupo">Fuerza</label>
-                <select asp-for="@Model.IDGrupo" class="form-control" required>
+                @*SELECT Cursos*@
+                <label asp-for="@Model.IDCurso">Fuerza</label>
+                <select asp-for="@Model.IDCurso" class="form-control" required>
                     @foreach (GrupoViewModel grupo in Model.ListaGrupos)
                     {
-                        <option value="@grupo.ID">@grupo.Nombre</option>
+                        <optgroup label="@grupo.Nombre">
+                            @foreach (CursoViewModel curso in Model.ListaCursos)
+                            {
+                                @if (curso.IDGrupo == grupo.ID)
+                                {
+                                    <option value="@curso.ID" name="IDCurso">@curso.Nombre</option>
+                                }
+                            }
+                        </optgroup>
                     }
                 </select>
 
 
+                @*SELECT Listado de Escuelas Curso SELECT*@ 
+                @{int id = -1;}
+                @for (int i = 0; i < Model.ListaEscuelasCursos.Count; i++)
+                {
+                    var escuela = Model.ListaEscuelasCursos[i];
 
-                @*<div class="mb-3">
-                    <label asp-for="@Model.Establecimiento">Establecimiento Academico</label>
-                    <select asp-for="@Model.Establecimiento" asp-items="@Html.GetEnumSelectList<EstablecimientoAcademico>()" class="form-control" required>
-                    </select>
-                </div>*@
+                    if (id != escuela.IDCurso)
+                    {
+                        @:<label asp-for="@Model.IDEscuelaCurso">Escuela</label>
+                        @:<select asp-for="@Model.IDEscuelaCurso" class='form-control' required>
+                            @:<option value='@escuela.ID'>@escuela.Nombre</option>
+                    }
+                    else
+                    {
+                        @:<option value='@escuela.ID'>@escuela.Nombre</option>
+                    }
 
-                <!--------------------------------------- GRUPOS ---------------------------------------->
+                    if (i + 1 < Model.ListaEscuelasCursos.Count)
+                    {
+                        id = Model.ListaEscuelasCursos[i + 1].IDCurso;
+                    }
 
-                @*<div class="mb-3" id="div-categoria">
-                    <label asp-for="@Model.Grupo">Fuerza</label>
-                    <select asp-for="@Model.Grupo" class="form-control" required>
-                        <optgroup label="Fuerzas Armadas">
-                            <option value="Ejercito">Ejercito</option>
-                            <option value="Armada">Armada</option>
-                            <option value="Fuerza Aerea">Fuerza Aerea</option>
-                        </optgroup>
-                        <optgroup label="Fuerzas de Seguridad">
-                            <option value="Gendarmeria">Gendarmería</option>
-                            <option value="Prefectura Naval">Prefectura Naval</option>
-                            <option value="Policia Federal">Policía Federal</option>
-                            <option value="Policia Federal de Seguridad Aeropuertaria">Policía Federal de Seguridad Aeropuertaria</option>
-                            <option value="Policia de Tucuman">Policía de Tucumán</option>
-                        </optgroup>
-                        <optgroup label="Capacitacion">
-                            <option value="Preparatoria Vocacional 100">Preparatoria Vocacional 100</option>
-                            <option value="Curso de Adaptacion Militar">Curso de Adaptación Militar</option>
-                            <option value="Asistente de Seguridad y Defensa">Asistente de Seguridad y Defensa</option>
-                            <option value="Entrenamiento de Competencias Emocionales">Entrenamiento de Competencias Emocionales</option>
-                            <option value="Adiestramiento Fisico Integral">Adiestramiento Físico Integral</option>
-                        </optgroup>
-                    </select>
-                </div>*@
+                    if (id != escuela.IDCurso)
+                    {
+                        @:</select>
+                    }
 
-                <!--------- ---------- FUERZAS ARMADAS ----------------->
-                <!-- EJERCITO -->
-                <!--<div class="mb-3" id="div-ejercito">
-                    <label asp-for="Model.Curso">Escuela</label>
-                    <select asp-for="Model.Curso" class="form-control" required>
-                        <option value="Colegio Militar de la Nacion">Colegio Militar de la Nacion</option>
-                        <option value="Escuela de Suboficiales del Ejercito Sargento Cabral">Escuela de Suboficiales del Ejercito Sargento Cabral</option>
-                    </select>
-                </div>-->
+                    if (i+1 == Model.ListaEscuelasCursos.Count)
+                    {
+                        @:</select>
+                    }
 
-                <!-- ARMADA -->
-                <!--<div class="mb-3" id="div-armada">
-                    <label asp-for="Model.Curso">Escuela</label>
-                    <select asp-for="Model.Curso" class="form-control" required>
-                        <option value="Escuela Naval Militar">Escuela Naval Militar</option>
-                        <option value="Escuela de Suboficiales de la Armada">Escuela de Suboficiales de la Armada</option>
-                    </select>
-                </div>-->
-
-                <!-- FUERZA AEREA -->
-                <!--<div class="mb-3" id="div-fuerza-aerea">
-                    <label asp-for="Model.Curso">Escuela</label>
-                    <select asp-for="Model.Curso" class="form-control" required>
-                        <option value="Escuela de Aviacion Militar">Escuela de Aviacion Militar</option>
-                        <option value="Escuela de Suboficiales de la Fuerza Aerea">Escuela de Suboficiales de la Fuerza Aerea</option>
-                    </select>
-                </div>-->
+                    id = Model.ListaEscuelasCursos[i].IDCurso;
+                }
 
             </fieldset>
 
@@ -213,7 +204,7 @@
 
                 <div class="mb-3">
                     <label asp-for="@Model.Instituto.Nombre">Nombre Escuela</label>
-                    <input asp-for="@Model.Instituto.Nombre" type="text" class="form-control" maxlength="100" }placeholder="" required>
+                    <input asp-for="@Model.Instituto.Nombre" type="text" class="form-control" maxlength="100" placeholder="" required>
                 </div>
 
                 <!-- VERIFICAR que si uno de los contactos esta relleno, entonces el otro no sea requerido -->
@@ -320,7 +311,7 @@
                     <input type="checkbox" class="form-check-input" id="tutor">
                     <label for="tutor">Tutor</label>
                 </div>
-            </div>
+            </div> 
 
             <div id="div-padre">
                 <hr>
@@ -454,7 +445,7 @@
            *@
 
 
-        </fieldset>
+                    </fieldset>
 
 
             <input id="submit-button" type="submit" class="btn btn-success" value="Registrarme">
