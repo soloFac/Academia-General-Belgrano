@@ -1,4 +1,4 @@
-﻿@model List<Proyecto.Entidades.Alumno>
+﻿@model List<Proyecto.ViewModels.AlumnoViewModel>
 
 <header>
     <h1>Listado Usuarios</h1>
@@ -19,31 +19,39 @@
         <th>Establecimiento</th>
         <th>Grupo</th>
         <th>Curso</th>
-        @*<th>FechaInscripcion</th>*@
+        <th>Escuela Curso</th>
+        <th>FechaInscripcion</th>
         <th>Estado</th>
         <th>Instituto</th>
     </tr>
 
-    @foreach (Alumno alumno in Model)
+    @foreach (AlumnoViewModel alumno in Model)
     {
-        <tr id="tablerow">
-            <td>@alumno.Nombre</td>
-            <td>@alumno.Apellido</td>
-            <td>@alumno.Mail</td>
-            <td>@alumno.DNI</td>
-            <td>@alumno.FechaNacimiento</td>
-            <td>@alumno.Provincia</td>
-            <td>@alumno.Departamento</td>
-            <td>@alumno.Localidad</td>
-            <td>@alumno.Domicilio</td>
-            <td>@alumno.Turno</td>
-            @*<td>@alumno.IDEstablecimiento</td>*@
-            @*<td>@alumno.Grupo</td>*@
-            <td></td>
-            @*<td>@alumno.Curso</td>*@
-            @*<td>@alumno.FechaInscripcion</td>*@
-            <td>@alumno.Estado</td>
-            <td>@alumno.Instituto</td>
-        </tr>
+<tr id="tablerow">
+    <td>@alumno.Nombre</td>
+    <td>@alumno.Apellido</td>
+    <td>@alumno.Mail</td>
+    <td>@alumno.DNI</td>
+    <td>@alumno.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+    <td>@alumno.Provincia</td>
+    <td>@alumno.Departamento</td>
+    <td>@alumno.Localidad</td>
+    <td>@alumno.Domicilio</td>
+    <td>@alumno.Turno</td>
+    <td>@alumno.Establecimiento.Nombre</td>
+    <td>@alumno.Grupo.Nombre</td>
+    <td>@alumno.Curso.Nombre</td>
+    <td>@alumno.EscuelaCurso.Nombre</td>
+    <td>@alumno.ListaFechasInscripcion[alumno.ListaFechasInscripcion.Count - 1].ToString("dd/MM/yyyy")</td>
+    @if (alumno.Estado == true)
+    {
+        <td>Inscripto</td>
+    }
+    else if (alumno.Estado == false)
+    {
+        <td>Deshabilitado</td>
+    }
+    <td>@alumno.Instituto.Nombre</td>
+</tr>
     }
 </table>

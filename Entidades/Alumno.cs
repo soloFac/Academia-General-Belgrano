@@ -11,40 +11,6 @@ namespace Proyecto.Entidades
         Tarde
     }
 
-    //public enum EstablecimientoAcademico
-    //{
-    //    Capital,
-    //    VillaQuinteros,
-    //    JuanBautistaAlberdi,
-    //    Virtual
-    //}
-
-    //public enum Grupos
-    //{
-    //    FuerzasArmadas,
-    //    FuerzasSeguridad,
-    //    Capacitacion
-    //}
-
-    //public enum Cursos
-    //{
-    //    Ejercito,
-    //    Armada,
-    //    FuerzaAerea,
-    //    Gendarmeria,
-    //    PrefecturaNaval,
-    //    PoliciaFederal,
-    //    PoliciaFederalSeguridadAeropuertaria,
-    //    PoliciaTucuman,
-    //    PreparatoriaVocacional,
-    //    CursoAdaptacionMilitar,
-    //    AsistenteSeguridadyDefensa,
-    //    EntrenamientoCompetenciasEmocionales,
-    //    AdiestramientoFisicoIntegral
-    //}
-
-
-
     public class Alumno : Persona
     {
         private string mail;

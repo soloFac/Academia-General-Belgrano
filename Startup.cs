@@ -52,7 +52,7 @@ namespace Proyecto
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Alumno}/{action=Preinscripcion}/{id?}");
+                    pattern: "{controller=Alumno}/{action=Index}/{id?}");
             });
         }
     }

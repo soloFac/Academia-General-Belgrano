@@ -26,17 +26,10 @@ namespace Proyecto.Controllers
         {
             RepositorioAlumno RAlumno = new RepositorioAlumno();
 
-            //DateTime today = DateTime.Now;
-            //EstablecimientoAcademico est = EstablecimientoAcademico.Capital;
-            //Escuela nEscuela = new Escuela("ASD", "DETP", "ASDASD", "38715464", "asddssad@gmail.com", "QWEWQEWE");
-            //Alumno nAlumno = new Alumno(2, "Franco", "Perez", "3815794361", "francopdlr@gmail.com", "41375145", today, "Tucuman", "Capital", "Yerba Buena", "Julio 123", Turnos.Mañana, est, Grupos.FuerzasArmadas, Cursos.AsistenteSeguridadyDefensa, today, true, nEscuela);
-
-            //RAlumno.AltaAlumno(nAlumno);
-
             List<Alumno> ListaAlumnos = RAlumno.GetAll();
-            //List<AlumnoViewModel> ListaAlumnosVM = mapper.Map<List<AlumnoViewModel>>(ListaAlumnos);
+            List<AlumnoViewModel> ListaAlumnosVM = mapper.Map<List<AlumnoViewModel>>(ListaAlumnos);
 
-            return View(ListaAlumnos);
+            return View(ListaAlumnosVM);
         }
 
         public IActionResult Preinscripcion()

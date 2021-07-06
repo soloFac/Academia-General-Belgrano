@@ -18,6 +18,16 @@ namespace Proyecto
             CreateMap<EstablecimientoAcademico, EstablecimientoAcademicoViewModel>().ReverseMap();
             CreateMap<Escuela, EscuelaViewModel>().ReverseMap();
 
+            CreateMap<Alumno, AlumnoViewModel>().ForMember(
+                dest => dest.Establecimiento, origen => origen.MapFrom(src => src.EstablecimientoAlumno)
+            ).ForMember(
+                dest => dest.Curso, origen => origen.MapFrom(src => src.CursoAlumno)
+            ).ForMember(
+                dest => dest.Grupo, origen => origen.MapFrom(src => src.GrupoAlumno)
+            ).ForMember(
+                dest => dest.EscuelaCurso, origen => origen.MapFrom(src => src.EscuelaCursoAlumno)
+            );
+
             CreateMap<PreinscripcionViewModel, Alumno>().ForMember(
                 dest => dest.Nombre, origen => origen.MapFrom(src => src.Nombre)
             ).ForMember(

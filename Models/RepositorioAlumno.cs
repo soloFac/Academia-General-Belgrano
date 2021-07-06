@@ -122,10 +122,19 @@ namespace Proyecto.Models
                 command.Parameters.AddWithValue("@departamento", nAlumno.Departamento);
                 command.Parameters.AddWithValue("@localidad", nAlumno.Localidad);
                 command.Parameters.AddWithValue("@domicilio", nAlumno.Domicilio);
-                command.Parameters.AddWithValue("@turno", nAlumno.Turno);
                 command.Parameters.AddWithValue("@id_establecimiento_academico", nAlumno.EstablecimientoAlumno.ID);
                 command.Parameters.AddWithValue("@estado", nAlumno.Estado);
                 command.Parameters.AddWithValue("@id_escuela", nAlumno.Instituto.ID);
+
+                if (nAlumno.Turno == Turnos.Mañana)
+                {
+                    command.Parameters.AddWithValue("@turno", "Mañana");
+                }
+                else if (nAlumno.Turno == Turnos.Tarde)
+                {
+                    command.Parameters.AddWithValue("@turno", "Tarde");
+                }
+
 
                 command.ExecuteNonQuery();
 
@@ -135,6 +144,7 @@ namespace Proyecto.Models
 
                 foreach (Familiar familiar in nAlumno.ListaFamiliares)
                 {
+                    familiar.IDAlumno = nAlumno.ID;
                     RFamiliar.AltaFamiliar(familiar);
                 }
                 foreach (string telefono in nAlumno.ListaTelefonos)
@@ -223,7 +233,7 @@ namespace Proyecto.Models
                 while (reader.Read())
                 {
                     DateTime FechaInscripcion = new DateTime();
-                    FechaInscripcion = (DateTime) reader["fecha_inscripcion"];
+                    FechaInscripcion = Convert.ToDateTime(reader["fecha_inscripcion"]);
 
                     ListaFechasInscripciones.Add(FechaInscripcion);
                 }
