@@ -72,11 +72,11 @@ namespace Proyecto.Models
                     nAlumno.ListaFamiliares = nRFamiliar.GetFamiliares(nAlumno.ID);
                     nAlumno.ListaFechasInscripcion = GetFechasInscripcion(nAlumno.ID);
                     nAlumno.ListaFechasPago = GetFechasPago(nAlumno.ID);
-                    nAlumno.ListaTelefonos = RepositorioHelper.GetTelefonosPersona(nAlumno.ID);
+                    //nAlumno.ListaTelefonos = RepositorioHelper.GetTelefonosPersona(nAlumno.ID);
                     nAlumno.ListaCursosAlumno = GetCursosAlumno(nAlumno.ID);
                     nAlumno.ListaGruposAlumno = GetGruposAlumno(nAlumno.ID);
 
-                    nAlumno.ListaEscuelasCursosAlumno = RepositorioHelper.GetEscuelasCursosAlumno(nAlumno.ID);
+                    nAlumno.ListaEscuelasCursosAlumno = GetEscuelasCursosAlumno(nAlumno.ID);
                     nAlumno.EstablecimientoAlumno = RepositorioHelper.GetEstablecimientoAcademico(nAlumno.EstablecimientoAlumno.ID);
                     
                     ListaAlumnos.Add(nAlumno);
@@ -329,6 +329,11 @@ namespace Proyecto.Models
             }
         }
 
+        /// <summary>
+        /// Retorna una lita de cursos a los que pertenece el alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <returns></returns>
         public static List<EscuelaCurso> GetEscuelasCursosAlumno(int IDAlumno)
         {
             List<EscuelaCurso> ListaEscuelasCursos = new List<EscuelaCurso>();
