@@ -21,6 +21,7 @@ namespace Proyecto.Entidades
         private string localidad;
         private string domicilio;
 
+        private bool becado;
         private Turnos turno;
         private EstablecimientoAcademico establecimientoAlumno;
         private Grupo grupoAlumno;
@@ -56,6 +57,7 @@ namespace Proyecto.Entidades
         public List<DateTime> ListaFechasPago { get => listaFechasPago; set => listaFechasPago = value; }
         public List<DateTime> ListaFechasInscripcion { get => listaFechasInscripcion; set => listaFechasInscripcion = value; }
         public List<string> ListaTelefonos { get => listaTelefonos; set => listaTelefonos = value; }
+        public bool Becado { get => becado; set => becado = value; }
 
         public Alumno() : base ()
         {
@@ -74,7 +76,7 @@ namespace Proyecto.Entidades
             this.ListaFechasPago = new List<DateTime>();
         }
 
-        public Alumno(int ID, string Nombre, string Apellido, string Mail, string DNI,
+        /*public Alumno(int ID, string Nombre, string Apellido, string Mail, string DNI,
                    DateTime FechaNacimiento, string Provincia, string Departamento, string Localidad, string Domicilio,
                    Turnos Turno, EstablecimientoAcademico EstablecimientoAlumno, Grupo GrupoAlumno, Curso CursoAlumno, EscuelaCurso EscuelaCursoAlumno,
                    DateTime FechaInscripcion, Escuela Instituto, List<DateTime> ListaFechasInscripcion, List<DateTime> ListaFechasPago, List<string> ListaTelefonos) : 
@@ -104,7 +106,7 @@ namespace Proyecto.Entidades
             this.ListaTelefonos = new List<string>(3);
             this.ListaFechasInscripcion = ListaFechasInscripcion;
             this.ListaFechasPago = ListaFechasPago;
-        }
+        }*/
         public void AgregarFamiliar(Familiar nFamiliar)
         {
             this.ListaFamiliares.Add(nFamiliar);

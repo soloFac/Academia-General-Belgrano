@@ -53,7 +53,8 @@ namespace Proyecto.Models
                     nAlumno.Localidad = reader["localidad"].ToString();
                     nAlumno.Domicilio = reader["domicilio"].ToString();
                     nAlumno.Turno = (Turnos) Convert.ToInt32(reader["turno"]);
-                    nAlumno.Estado = (Boolean) reader["estado"];
+                    nAlumno.Estado = Convert.ToBoolean(reader["estado"]);
+                    nAlumno.Becado = Convert.ToBoolean(reader["becado"]);
 
                     //ESCUELA
                     nAlumno.Instituto.ID = Convert.ToInt32(reader["id_escuela"]);
@@ -111,9 +112,9 @@ namespace Proyecto.Models
                 nAlumno.ID = GetLastIDPersonas() + 1;
 
                 command.CommandText = "INSERT INTO alumnos(id_persona, mail, dni, fecha_nacimiento, provincia, departamento, localidad, domicilio, " +
-                                                            "turno, id_establecimiento_academico, estado, id_escuela) " +
+                                                            "turno, id_establecimiento_academico, estado, id_escuela, becado) " +
                                                "VALUES(@id_persona, @mail, @dni, @fecha_nacimiento, @provincia, @departamento, @localidad, " +
-                                                            "@domicilio, @turno, @id_establecimiento_academico, @estado, @id_escuela)";
+                                                            "@domicilio, @turno, @id_establecimiento_academico, @estado, @id_escuela, @becado)";
                 command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
                 command.Parameters.AddWithValue("@mail", nAlumno.Mail);
                 command.Parameters.AddWithValue("@dni", nAlumno.DNI);
@@ -123,8 +124,9 @@ namespace Proyecto.Models
                 command.Parameters.AddWithValue("@localidad", nAlumno.Localidad);
                 command.Parameters.AddWithValue("@domicilio", nAlumno.Domicilio);
                 command.Parameters.AddWithValue("@id_establecimiento_academico", nAlumno.EstablecimientoAlumno.ID);
-                command.Parameters.AddWithValue("@estado", nAlumno.Estado);
+                command.Parameters.AddWithValue("@estado", false);
                 command.Parameters.AddWithValue("@id_escuela", nAlumno.Instituto.ID);
+                command.Parameters.AddWithValue("@becado", false);
 
                 if (nAlumno.Turno == Turnos.Mañana)
                 {
@@ -304,24 +306,24 @@ namespace Proyecto.Models
         /// </summary>
         /// <param name="IDAlumno"></param>
         /// <param name="FechaPago"></param>
-        public static void AltaFechasPagos(int IDAlumno, DateTime FechaPago)
-        {
-            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+        //public static void AltaFechasPagos(int IDAlumno, DateTime FechaPago)
+        //{
+        //    string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
 
-            using (var connection = new SQLiteConnection(cadena))
-            {
-                connection.Open();
+        //    using (var connection = new SQLiteConnection(cadena))
+        //    {
+        //        connection.Open();
 
-                var command = connection.CreateCommand();
+        //        var command = connection.CreateCommand();
 
-                command.CommandText = "INSERT INTO fechas_pagos(id_alumno, fecha_pago) " +
-                                        "VALUES(@id_alumno, @fecha_pago)";
-                //command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
-                command.Parameters.AddWithValue("@id_alumno", IDAlumno);
-                command.Parameters.AddWithValue("@fecha_pago", FechaPago);
+        //        command.CommandText = "INSERT INTO fechas_pagos(id_alumno, fecha_pago) " +
+        //                                "VALUES(@id_alumno, @fecha_pago)";
+        //        //command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
+        //        command.Parameters.AddWithValue("@id_alumno", IDAlumno);
+        //        command.Parameters.AddWithValue("@fecha_pago", FechaPago);
 
-                command.ExecuteNonQuery();
-            }
-        }
+        //        command.ExecuteNonQuery();
+        //    }
+        //}
     }
 }

@@ -10,6 +10,9 @@ namespace Proyecto.ViewModels
         public int ID { get; set; }
         public string Nombre { get; set; }
         public int IDCurso { get; set; }
+        public decimal Precio { get; set; }
+        public int Precio_Inscripcion { get; set; }
+        public bool Oficial { get; set; }
 
         public EscuelaCursoViewModel()
         {

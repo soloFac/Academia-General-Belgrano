@@ -50,7 +50,7 @@ namespace Proyecto.Models
 
                 var command = connection.CreateCommand();
 
-                command.CommandText = "INSERT INTO Escuelas(nombre, domicilio, telefono, mail, localidad, departamento, provincia) " +
+                command.CommandText = "INSERT INTO escuelas(nombre, domicilio, telefono, mail, localidad, departamento, provincia) " +
                                                     "VALUES(@nombre, @domicilio, @telefono, @mail, @localidad, @departamento, @provincia)";
                 command.Parameters.AddWithValue("@nombre", nEscuela.Nombre);
                 command.Parameters.AddWithValue("@domicilio", nEscuela.Domicilio);
