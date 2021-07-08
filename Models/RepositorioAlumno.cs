@@ -73,9 +73,10 @@ namespace Proyecto.Models
                     nAlumno.ListaFechasInscripcion = GetFechasInscripcion(nAlumno.ID);
                     nAlumno.ListaFechasPago = GetFechasPago(nAlumno.ID);
                     nAlumno.ListaTelefonos = RepositorioHelper.GetTelefonosPersona(nAlumno.ID);
-                    nAlumno.CursoAlumno = RepositorioHelper.GetCursoAlumno(nAlumno.ID);
-                    nAlumno.GrupoAlumno = RepositorioHelper.GetGrupoAlumno(nAlumno.CursoAlumno.IDGrupo);
-                    nAlumno.EscuelaCursoAlumno = RepositorioHelper.GetEscuelaCursoAlumno(nAlumno.EscuelaCursoAlumno.ID);
+                    nAlumno.ListaCursosAlumno = GetCursosAlumno(nAlumno.ID);
+                    nAlumno.ListaGruposAlumno = GetGruposAlumno(nAlumno.ID);
+
+                    nAlumno.ListaEscuelasCursosAlumno = RepositorioHelper.GetEscuelasCursosAlumno(nAlumno.ID);
                     nAlumno.EstablecimientoAlumno = RepositorioHelper.GetEstablecimientoAcademico(nAlumno.EstablecimientoAlumno.ID);
                     
                     ListaAlumnos.Add(nAlumno);
@@ -142,7 +143,7 @@ namespace Proyecto.Models
 
                 AltaFechaInscripcion(nAlumno.ID, DateTime.Now);
 
-                RepositorioHelper.AltaDetallesCursos(nAlumno.ID, nAlumno.CursoAlumno.ID);
+                RepositorioHelper.AltaDetallesCursos(nAlumno.ID, nAlumno.ListaCursosAlumno[0].ID);
 
                 foreach (Familiar familiar in nAlumno.ListaFamiliares)
                 {
@@ -154,9 +155,9 @@ namespace Proyecto.Models
                     RepositorioHelper.AltaTelefono(nAlumno.ID, telefono);
                 }
 
-                if (nAlumno.EscuelaCursoAlumno.ID >= 1)
+                if (nAlumno.ListaEscuelasCursosAlumno[0].ID >= 1)
                 {
-                    RepositorioHelper.AltaEscuelasCursos(nAlumno.ID, nAlumno.EscuelaCursoAlumno.ID);
+                    RepositorioHelper.AltaEscuelasCursos(nAlumno.ID, nAlumno.ListaEscuelasCursosAlumno[0].ID);
                 }
 
 
@@ -244,37 +245,6 @@ namespace Proyecto.Models
             }
         }
 
-        /// <summary>
-        /// Retorna una lista de fechas de pago del alumno
-        /// </summary>
-        /// <param name="IDAlumno"></param>
-        /// <returns></returns>
-        public List<DateTime> GetFechasPago(int IDAlumno)
-        {
-            List<DateTime> ListaFechasPago = new List<DateTime>();
-            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
-
-            using (var connection = new SQLiteConnection(cadena))
-            {
-                connection.Open();
-
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM fechas_pagos " +
-                                            "WHERE id_alumno = " + IDAlumno.ToString();
-
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    DateTime FechaPago = new DateTime();
-                    FechaPago = (DateTime)reader["fecha_inscripcion"];
-
-                    ListaFechasPago.Add(FechaPago);
-                }
-
-                return ListaFechasPago;
-            }
-        }
 
         /// <summary>
         /// Registra la fecha de inscripcion del alumno
@@ -301,29 +271,143 @@ namespace Proyecto.Models
             }
         }
 
+
+        /// <summary>
+        /// retorna una lista de grupos a los que pertenece el alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <returns></returns>
+        public List<Grupo> GetGruposAlumno(int IDAlumno)
+        {
+            List<Grupo> ListaGrupos = new List<Grupo>();
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM cursos " +
+                                            "INNER JOIN detalles_alumnos USING(id_curso) " +
+                                            "INNER JOIN grupos USING(id_grupo) WHERE id_alumno = " + IDAlumno.ToString();
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Grupo nGrupo = new Grupo();
+                    nGrupo = RepositorioHelper.GetGrupo(Convert.ToInt32(reader["id_grupo"]));
+                    ListaGrupos.Add(nGrupo);
+                }
+                return ListaGrupos;
+            }
+        }
+
+        /// <summary>
+        /// retorna una lista de cursos a los que pertenece el alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <returns></returns>
+        public static List<Curso> GetCursosAlumno(int IDAlumno)
+        {
+            List<Curso> ListaCursos = new List<Curso>();
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM detalles_cursos " +
+                                            "INNER JOIN cursos USING(id_curso) " +
+                                            "WHERE id_alumno = " + IDAlumno.ToString();
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Curso nCurso = new Curso();
+                    nCurso = RepositorioHelper.GetCurso(Convert.ToInt32(reader["id_curso"]));
+                    ListaCursos.Add(nCurso);
+                }
+                return ListaCursos;
+            }
+        }
+
+        public static List<EscuelaCurso> GetEscuelasCursosAlumno(int IDAlumno)
+        {
+            List<EscuelaCurso> ListaEscuelasCursos = new List<EscuelaCurso>();
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM detalles_escuelas_cursos " +
+                                            "WHERE id_alumno = " + IDAlumno.ToString();
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    EscuelaCurso nEscuelaCurso = new EscuelaCurso();
+                    nEscuelaCurso = RepositorioHelper.GetEscuelaCurso(Convert.ToInt32(reader["id_escuela_curso"]));
+                    ListaEscuelasCursos.Add(nEscuelaCurso);
+                }
+                return ListaEscuelasCursos;
+            }
+        }
+
+
+        /// <summary>
+        /// Retorna una lista de fechas de pago del alumno
+        /// </summary>
+        /// <param name="IDAlumno"></param>
+        /// <returns></returns>
+        /*public List<DateTime> GetFechasPago(int IDAlumno)
+        {
+            List<DateTime> ListaFechasPago = new List<DateTime>();
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
+
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM fechas_pagos " +
+                                            "WHERE id_alumno = " + IDAlumno.ToString();
+
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    DateTime FechaPago = new DateTime();
+                    FechaPago = (DateTime)reader["fecha_inscripcion"];
+
+                    ListaFechasPago.Add(FechaPago);
+                }
+
+                return ListaFechasPago;
+            }
+        }*/
+
+        /*
         /// <summary>
         /// Registra la fecha de pago del alumno
         /// </summary>
         /// <param name="IDAlumno"></param>
         /// <param name="FechaPago"></param>
-        //public static void AltaFechasPagos(int IDAlumno, DateTime FechaPago)
-        //{
-        //    string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
+        public static void AltaFechasPagos(int IDAlumno, DateTime FechaPago)
+        {
+            string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
 
-        //    using (var connection = new SQLiteConnection(cadena))
-        //    {
-        //        connection.Open();
+            using (var connection = new SQLiteConnection(cadena))
+            {
+                connection.Open();
 
-        //        var command = connection.CreateCommand();
+                var command = connection.CreateCommand();
 
-        //        command.CommandText = "INSERT INTO fechas_pagos(id_alumno, fecha_pago) " +
-        //                                "VALUES(@id_alumno, @fecha_pago)";
-        //        //command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
-        //        command.Parameters.AddWithValue("@id_alumno", IDAlumno);
-        //        command.Parameters.AddWithValue("@fecha_pago", FechaPago);
+                command.CommandText = "INSERT INTO fechas_pagos(id_alumno, fecha_pago) " +
+                                        "VALUES(@id_alumno, @fecha_pago)";
+                //command.Parameters.AddWithValue("@id_persona", nAlumno.ID);
+                command.Parameters.AddWithValue("@id_alumno", IDAlumno);
+                command.Parameters.AddWithValue("@fecha_pago", FechaPago);
 
-        //        command.ExecuteNonQuery();
-        //    }
-        //}
+                command.ExecuteNonQuery();
+            }
+        }*/
     }
 }

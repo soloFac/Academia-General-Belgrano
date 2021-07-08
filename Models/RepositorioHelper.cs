@@ -57,6 +57,9 @@ namespace Proyecto.Models
                     nCurso.ID = Convert.ToInt32(reader["id_curso"]);
                     nCurso.Nombre = reader["nombre"].ToString();
                     nCurso.IDGrupo = Convert.ToInt32(reader["id_grupo"]);
+                    nCurso.Precio = Convert.ToDecimal(reader["precio"]);
+                    nCurso.Precio_Inscripcion = Convert.ToInt32(reader["precio_inscripcion"]);
+                    nCurso.Tiene_Escuela = Convert.ToBoolean(reader["tiene_escuela"]);
 
                     ListaCursos.Add(nCurso);
                 }
@@ -85,6 +88,9 @@ namespace Proyecto.Models
                     nEscuelaCurso.ID = Convert.ToInt32(reader["id_escuela_curso"]);
                     nEscuelaCurso.Nombre = reader["nombre"].ToString();
                     nEscuelaCurso.IDCurso = Convert.ToInt32(reader["id_curso"]);
+                    nEscuelaCurso.Precio_Inscripcion = Convert.ToInt32(reader["precio_inscripcion"]);
+                    nEscuelaCurso.Precio = Convert.ToDecimal(reader["precio"]);
+                    nEscuelaCurso.Oficial = Convert.ToBoolean(reader["oficial"]);
 
                     ListaEscuelasCursos.Add(nEscuelaCurso);
                 }
@@ -245,7 +251,7 @@ namespace Proyecto.Models
         /// </summary>
         /// <param name="IDAlumno"></param>
         /// <returns></returns>
-        public static Curso GetCursoAlumno(int IDAlumno)
+        public static Curso GetCurso(int IDCurso)
         {
             Curso nCurso = new Curso();
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
@@ -255,17 +261,20 @@ namespace Proyecto.Models
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM detalles_cursos " +
-                                            "INNER JOIN cursos USING(id_curso) " +
-                                            "WHERE id_alumno = " + IDAlumno.ToString();
+                command.CommandText = "SELECT * FROM cursos " +
+                                            "WHERE id_curso = " + IDCurso.ToString();
 
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
                     nCurso.ID = Convert.ToInt32(reader["id_curso"]);
-                    nCurso.IDGrupo = Convert.ToInt32(reader["id_grupo"]);
                     nCurso.Nombre = reader["nombre"].ToString();
+                    nCurso.IDGrupo = Convert.ToInt32(reader["id_grupo"]);
+                    nCurso.Precio = Convert.ToDecimal(reader["precio"]);
+                    nCurso.Precio_Inscripcion = Convert.ToInt32(reader["precio_inscripcion"]);
+                    nCurso.Tiene_Escuela = Convert.ToBoolean(reader["tiene_escuela"]);
+
                 }
 
                 return nCurso;
@@ -277,7 +286,7 @@ namespace Proyecto.Models
         /// </summary>
         /// <param name="IDCurso"></param>
         /// <returns></returns>
-        public static Grupo GetGrupoAlumno(int IDGrupo)
+        public static Grupo GetGrupo(int IDGrupo)
         {
             Grupo nGrupo = new Grupo();
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
@@ -307,7 +316,7 @@ namespace Proyecto.Models
         /// </summary>
         /// <param name="IDAlumno"></param>
         /// <returns></returns>
-        public static EscuelaCurso GetEscuelaCursoAlumno(int IDEscuelaCurso)
+        public static EscuelaCurso GetEscuelaCurso(int IDEscuelaCurso)
         {
             EscuelaCurso nEscuelaCurso = new EscuelaCurso();
             string cadena = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "DataBase\\DataBase.db");
@@ -327,6 +336,9 @@ namespace Proyecto.Models
                     nEscuelaCurso.ID = Convert.ToInt32(reader["id_escuela_curso"]);
                     nEscuelaCurso.Nombre = reader["nombre"].ToString();
                     nEscuelaCurso.IDCurso = Convert.ToInt32(reader["id_curso"]);
+                    nEscuelaCurso.Precio_Inscripcion = Convert.ToInt32(reader["precio_inscripcion"]);
+                    nEscuelaCurso.Precio = Convert.ToDecimal(reader["precio"]);
+                    nEscuelaCurso.Oficial = Convert.ToBoolean(reader["oficial"]);
                 }
 
                 return nEscuelaCurso;

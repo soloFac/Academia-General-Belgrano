@@ -24,9 +24,9 @@ namespace Proyecto.Entidades
         private bool becado;
         private Turnos turno;
         private EstablecimientoAcademico establecimientoAlumno;
-        private Grupo grupoAlumno;
-        private Curso cursoAlumno;
-        private EscuelaCurso escuelaCursoAlumno;
+        private List<Grupo> listaGruposAlumno;
+        private List<Curso> listaCursosAlumno;
+        private List<EscuelaCurso> listaEscuelasCursosAlumno;
         private bool estado;
         private Escuela instituto;
         private List<Familiar> listaFamiliares;
@@ -49,15 +49,15 @@ namespace Proyecto.Entidades
 
         public Turnos Turno { get => turno; set => turno = value; }
         public EstablecimientoAcademico EstablecimientoAlumno { get => establecimientoAlumno; set => establecimientoAlumno = value; }
-        public Grupo GrupoAlumno { get => grupoAlumno; set => grupoAlumno = value; }
-        public Curso CursoAlumno { get => cursoAlumno; set => cursoAlumno = value; }
         public Escuela Instituto { get => instituto; set => instituto = value; }
-        public EscuelaCurso EscuelaCursoAlumno { get => escuelaCursoAlumno; set => escuelaCursoAlumno = value; }
         public List<Familiar> ListaFamiliares { get => listaFamiliares; set => listaFamiliares = value; }
         public List<DateTime> ListaFechasPago { get => listaFechasPago; set => listaFechasPago = value; }
         public List<DateTime> ListaFechasInscripcion { get => listaFechasInscripcion; set => listaFechasInscripcion = value; }
         public List<string> ListaTelefonos { get => listaTelefonos; set => listaTelefonos = value; }
         public bool Becado { get => becado; set => becado = value; }
+        public List<Grupo> ListaGruposAlumno { get => listaGruposAlumno; set => listaGruposAlumno = value; }
+        public List<Curso> ListaCursosAlumno { get => listaCursosAlumno; set => listaCursosAlumno = value; }
+        public List<EscuelaCurso> ListaEscuelasCursosAlumno { get => listaEscuelasCursosAlumno; set => listaEscuelasCursosAlumno = value; }
 
         public Alumno() : base ()
         {
@@ -66,9 +66,9 @@ namespace Proyecto.Entidades
             this.Estado = false;
             this.Instituto = new Escuela();
             this.EstablecimientoAlumno = new EstablecimientoAcademico();
-            this.GrupoAlumno = new Grupo();
-            this.CursoAlumno = new Curso();
-            this.EscuelaCursoAlumno = new EscuelaCurso();
+            this.ListaGruposAlumno = new List<Grupo>();
+            this.ListaCursosAlumno = new List<Curso>();
+            this.ListaEscuelasCursosAlumno = new List<EscuelaCurso>();
             
             this.ListaFamiliares = new List<Familiar>();
             this.ListaTelefonos = new List<string>();
