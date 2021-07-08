@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Franco\\source\\repos\\AGB\\Proyecto\\Proyecto.csproj": {}
+    "C:\\Users\\Franco\\Desktop\\Repositorios\\AGB\\Proyecto\\Proyecto.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Franco\\source\\repos\\AGB\\Proyecto\\Proyecto.csproj": {
+    "C:\\Users\\Franco\\Desktop\\Repositorios\\AGB\\Proyecto\\Proyecto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Franco\\source\\repos\\AGB\\Proyecto\\Proyecto.csproj",
+        "projectUniqueName": "C:\\Users\\Franco\\Desktop\\Repositorios\\AGB\\Proyecto\\Proyecto.csproj",
         "projectName": "Proyecto",
-        "projectPath": "C:\\Users\\Franco\\source\\repos\\AGB\\Proyecto\\Proyecto.csproj",
+        "projectPath": "C:\\Users\\Franco\\Desktop\\Repositorios\\AGB\\Proyecto\\Proyecto.csproj",
         "packagesPath": "C:\\Users\\Franco\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Franco\\source\\repos\\AGB\\Proyecto\\obj\\",
+        "outputPath": "C:\\Users\\Franco\\Desktop\\Repositorios\\AGB\\Proyecto\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Franco\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -79,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
